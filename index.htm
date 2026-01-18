@@ -43,6 +43,15 @@
         .chapter-title { color: #075985; font-weight: 800; border-left: 5px solid #075985; padding-left: 1.25rem; background-color: #f0f9ff; padding-top: 0.75rem; padding-bottom: 0.75rem; margin-top: 3.5rem; margin-bottom: 2rem; font-size: 1.4rem; letter-spacing: -0.025em; }
         
         .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-out;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 lang-ko">
@@ -63,11 +72,24 @@
                 
                 <!-- 데스크탑 메뉴 -->
                 <div class="hidden xl:flex space-x-6 items-center text-sm font-medium">
-                    <a href="#constitution" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">헌법</span><span class="lang-en">Constitution</span></a>
-                    <a href="#organization" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">내각/인사</span><span class="lang-en">Cabinet/Talent</span></a>
-                    <a href="#roadmap" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">로드맵</span><span class="lang-en">Roadmap</span></a>
-                    <a href="#message" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">파트너십</span><span class="lang-en">Partnership</span></a>
-                    <a href="#vision" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span></a>
+                    <a href="#constitution" class="text-slate-600 hover:text-sky-700 transition">
+                        <span class="lang-ko">헌법</span><span class="lang-en">Constitution</span>
+                    </a>
+                    <a href="#organization" class="text-slate-600 hover:text-sky-700 transition">
+                        <span class="lang-ko">내각/인사</span><span class="lang-en">Cabinet/Talent</span>
+                    </a>
+                    <a href="#roadmap" class="text-slate-600 hover:text-sky-700 transition">
+                        <span class="lang-ko">로드맵</span><span class="lang-en">Roadmap</span>
+                    </a>
+                    <a href="#message" class="text-slate-600 hover:text-sky-700 transition">
+                        <span class="lang-ko">파트너십</span><span class="lang-en">Partnership</span>
+                    </a>
+                    <a href="#vision" class="text-slate-600 hover:text-sky-700 transition">
+                        <span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span>
+                    </a>
+                    <a href="#qna" class="text-slate-600 hover:text-sky-700 transition">
+                        <span class="lang-ko">질문답변</span><span class="lang-en">Q&A</span>
+                    </a>
                 </div>
 
                 <!-- 우측 컨트롤 -->
@@ -77,9 +99,9 @@
                         <span class="lang-ko">EN 보기</span><span class="lang-en">View KR</span>
                     </button>
                     
-                    <a href="mailto:contact@pgnk.org" class="px-3 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-[10px] md:text-xs">
+                    <button onclick="openModal()" class="px-3 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-[10px] md:text-xs">
                         <span class="lang-ko">연락 및 참여하기</span><span class="lang-en">Contact & Join Us</span>
-                    </a>
+                    </button>
 
                     <button id="mobile-menu-btn" class="xl:hidden text-slate-600 hover:text-slate-900 focus:outline-none">
                         <i data-lucide="menu" class="h-6 w-6"></i>
@@ -87,7 +109,90 @@
                 </div>
             </div>
         </div>
+
+        <!-- 모바일 메뉴 -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-slate-200">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#constitution" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">헌법</span><span class="lang-en">Constitution</span></a>
+                <a href="#organization" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">조직 및 인재</span><span class="lang-en">Organization</span></a>
+                <a href="#roadmap" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">과제와 의무</span><span class="lang-en">Tasks & Duties</span></a>
+                <a href="#message" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">세계 메시지</span><span class="lang-en">Global Message</span></a>
+                <a href="#vision" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span></a>
+            </div>
+        </div>
     </nav>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity modal-overlay" aria-hidden="true" onclick="closeModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full modal-content">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-slate-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <i data-lucide="mail" class="h-6 w-6 text-slate-600"></i>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                <span class="lang-ko">연락 및 참여하기</span>
+                                <span class="lang-en">Contact & Join Us</span>
+                            </h3>
+                            <div class="mt-4">
+                                <form class="space-y-4">
+                                    <div>
+                                        <label for="contact-name" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">이름 / 단체명</span>
+                                            <span class="lang-en">Name / Organization</span>
+                                        </label>
+                                        <input type="text" name="name" id="contact-name" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-phone" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">연락처</span>
+                                            <span class="lang-en">Phone Number</span>
+                                        </label>
+                                        <input type="tel" name="phone" id="contact-phone" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-email" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">이메일</span>
+                                            <span class="lang-en">Email</span>
+                                        </label>
+                                        <input type="email" name="email" id="contact-email" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-address" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">주소</span>
+                                            <span class="lang-en">Address</span>
+                                        </label>
+                                        <input type="text" name="address" id="contact-address" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-message" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">메시지</span>
+                                            <span class="lang-en">Message</span>
+                                        </label>
+                                        <textarea id="contact-message" name="message" rows="3" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        <span class="lang-ko">보내기</span>
+                        <span class="lang-en">Send</span>
+                    </button>
+                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        <span class="lang-ko">취소</span>
+                        <span class="lang-en">Cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 히어로 섹션 -->
     <header class="relative pt-32 pb-24 lg:pt-48 lg:pb-40 bg-slate-900 overflow-hidden hero-pattern">
@@ -137,32 +242,69 @@
                 
                 <!-- 전문 (Preamble) -->
                 <div class="mb-16 border-b-2 border-slate-200 pb-16">
-                    <h3 class="text-3xl font-bold text-center mb-10 serif text-slate-900 uppercase tracking-widest">전 문 (Preamble)</h3>
+                    <h3 class="text-3xl font-bold text-center mb-10 serif text-slate-900 uppercase tracking-widest">
+                        <span class="lang-ko">전 문 (Preamble)</span><span class="lang-en">Preamble</span>
+                    </h3>
                     <div class="text-lg leading-loose text-slate-700 font-medium serif text-justify space-y-8">
-                        <p>우리는 인간이 태어날 때부터 자유롭고 존엄하다는 보편적 진리를 다시 선언한다. 그 어떤 국가, 이념, 권력도 인간의 존엄 위에 존재할 수 없으며, 공포와 강압, 거짓과 고립은 결코 정당한 통치의 근거가 될 수 없다.</p>
-                        <p>오랜 세월 동안 한반도의 북쪽 땅은 폐쇄와 억압, 개인숭배와 폭력의 체제 아래 놓여 있었으며, 그로 인해 수많은 생명이 자유를 박탈당하고 세계로부터 단절되었다. 우리는 이 비극의 역사를 반복하지 않기 위해, 그리고 침묵 속에 고통받아 온 사람들의 권리를 회복하기 위해 새로운 출발을 선언한다.</p>
-                        <p>이 헌법은 과거와의 단절을 선언하는 윤리적·정치적 약속이자 의지이다. 우리는 공포가 아닌 법으로, 충성이 아닌 책임으로, 폐쇄가 아닌 개방으로 국가를 재구성하고자 한다.</p>
-                        <p>우리가 지향하는 새로운 국가는 단일한 민족, 혈통, 문화, 역사 신화를 중심으로 정의되지 않는다. 새로운 국가는 인류 보편의 가치 위에 서는 글로벌 시민 국가이다. 우리는 민족과 문화, 역사를 부정하지 않으나, 그것을 절대화하거나 배타적 정체성의 근거로 삼지 않는다. 과거는 기억하되 숭배하지 않으며, 전통은 존중하되 미래를 속박하게 두지 않는다.</p>
-                        <p>새로운 국가는 고정된 이념의 산물이 아니라, 끊임없이 스스로를 성찰하고 개혁하는 열린 공동체이다. 그 정체성은 혈통이 아니라 시민적 가치에서 나오며, 권위가 아니라 합의에서 형성된다. 우리는 이 국가가 세계와 단절된 고립된 공간이 아니라, 국제사회와 책임을 나누는 일원으로 존재하기를 선언한다. 국제법, 인권 규범, 평화 질서를 존중하며, 인류 공동의 문제 해결에 참여하는 성숙한 행위자가 될 것을 다짐한다.</p>
-                        <p>이에 우리는 국제사회와의 연대 속에서, 그리고 자유를 향한 우리의 숭고한 투쟁의 역사 위에서, 북한과도임시정부를 수립한다. 이 정부는 영구 권력이 아닌 전환의 도구이며, 지배가 아닌 봉사를 사명으로 삼는다. 그 존재 이유는 단 하나, 억압 이후의 사회를 정의롭고 자유로운 질서로 이행시키는 데 있다. 이 헌법은 한 민족만을 위한 선언이 아니라, 자유를 갈망하는 모든 인간과 함께 쓰는 약속이며, 닫힌 체제 이후에 올 세계를 향한 공적 선언이다. 이로써 우리는 인간 존엄, 자유, 평화, 책임, 그리고 개방이라는 보편적 가치 위에 새로운 국가의 첫 문을 연다.</p>
+                        <div class="lang-ko">
+                            <p>우리는 인간이 태어날 때부터 자유롭고 존엄하다는 보편적 진리를 다시 선언한다. 그 어떤 국가, 이념, 권력도 인간의 존엄 위에 존재할 수 없으며, 공포와 강압, 거짓과 고립은 결코 정당한 통치의 근거가 될 수 없다.</p>
+                            <p>오랜 세월 동안 한반도의 북쪽 땅은 폐쇄와 억압, 개인숭배와 폭력의 체제 아래 놓여 있었으며, 그로 인해 수많은 생명이 자유를 박탈당하고 세계로부터 단절되었다. 우리는 이 비극의 역사를 반복하지 않기 위해, 그리고 침묵 속에 고통받아 온 사람들의 권리를 회복하기 위해 새로운 출발을 선언한다.</p>
+                            <p>이 헌법은 과거와의 단절을 선언하는 윤리적·정치적 약속이자 의지이다. 우리는 공포가 아닌 법으로, 충성이 아닌 책임으로, 폐쇄가 아닌 개방으로 국가를 재구성하고자 한다.</p>
+                            <p>우리가 지향하는 새로운 국가는 단일한 민족, 혈통, 문화, 역사 신화를 중심으로 정의되지 않는다. 새로운 국가는 인류 보편의 가치 위에 서는 글로벌 시민 국가이다. 우리는 민족과 문화, 역사를 부정하지 않으나, 그것을 절대화하거나 배타적 정체성의 근거로 삼지 않는다. 과거는 기억하되 숭배하지 않으며, 전통은 존중하되 미래를 속박하게 두지 않는다.</p>
+                            <p>새로운 국가는 고정된 이념의 산물이 아니라, 끊임없이 스스로를 성찰하고 개혁하는 열린 공동체이다. 그 정체성은 혈통이 아니라 시민적 가치에서 나오며, 권위가 아니라 합의에서 형성된다. 우리는 이 국가가 세계와 단절된 고립된 공간이 아니라, 국제사회와 책임을 나누는 일원으로 존재하기를 선언한다. 국제법, 인권 규범, 평화 질서를 존중하며, 인류 공동의 문제 해결에 참여하는 성숙한 행위자가 될 것을 다짐한다.</p>
+                            <p>이에 우리는 국제사회와의 연대 속에서, 그리고 자유를 향한 우리의 숭고한 투쟁의 역사 위에서, 북한과도임시정부를 수립한다. 이 정부는 영구 권력이 아닌 전환의 도구이며, 지배가 아닌 봉사를 사명으로 삼는다. 그 존재 이유는 단 하나, 억압 이후의 사회를 정의롭고 자유로운 질서로 이행시키는 데 있다. 이 헌법은 한 민족만을 위한 선언이 아니라, 자유를 갈망하는 모든 인간과 함께 쓰는 약속이며, 닫힌 체제 이후에 올 세계를 향한 공적 선언이다. 이로써 우리는 인간 존엄, 자유, 평화, 책임, 그리고 개방이라는 보편적 가치 위에 새로운 국가의 첫 문을 연다.</p>
+                        </div>
+                        <div class="lang-en">
+                            <p>We reaffirm the universal truth that human beings are born free and dignified.</p>
+                            <p>No state, ideology, or power can exist above human dignity, and terror, coercion, lies, and isolation can never be grounds for legitimate rule.</p>
+                            <p>For a long time, the northern land of the Korean Peninsula has been under a system of closure, oppression, personality cults, and violence, resulting in countless lives being deprived of freedom and severed from the world.</p>
+                            <p>We declare a new beginning to prevent the repetition of this tragic history and to restore the rights of those who have suffered in silence.</p>
+                            <p>This Constitution is an ethical and political promise and will to declare a severance from the past. We seek to reconstruct the nation not with fear but with law, not with loyalty but with responsibility, and not with closure but with openness.</p>
+                            <p>The new nation we aim for is not defined by a single ethnicity, bloodline, culture, or historical myth.</p>
+                            <p>The new nation is a Global Citizen State standing upon universal human values.</p>
+                            <p>We do not deny ethnicity, culture, or history, but we do not absolutize them or use them as grounds for an exclusive identity.</p>
+                            <p>We remember the past but do not worship it; we respect tradition but do not let it bind the future.</p>
+                            <p>The new nation is not a product of fixed ideology but an open community that constantly reflects upon and reforms itself.</p>
+                            <p>Its identity stems not from bloodline but from civic values, and is formed not by authority but by consensus.</p>
+                            <p>We declare that this nation exists not as an isolated space severed from the world, but as a member sharing responsibilities with the international community.</p>
+                            <p>We pledge to become a mature actor that respects international law, human rights norms, and the peace order, participating in the resolution of common human problems.</p>
+                            <p>Hereby, in solidarity with the international community and upon the history of our noble struggle for freedom, we establish the Provisional Government of North Korea.</p>
+                            <p>This government is not a permanent power but an instrument of transition, and its mission is service, not domination.</p>
+                            <p>Its sole reason for existence lies in transitioning the society after oppression into a just and free order.</p>
+                            <p>This Constitution is not a declaration for one ethnic group alone, but a promise written together with all humans yearning for freedom, and a public declaration toward the world that will come after the closed system.</p>
+                            <p>With this, we open the first door of a new nation upon the universal values of human dignity, freedom, peace, responsibility, and openness.</p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 상세 조항 -->
                 <div class="space-y-4">
-                    <h4 class="chapter-title">제1장 총강</h4>
+                    <h4 class="chapter-title">
+                        <span class="lang-ko">제1장 총강</span><span class="lang-en">Chapter 1: General Provisions</span>
+                    </h4>
                     <div>
-                        <span class="article-title">제1조 (북한과도임시정부 수립의 필연성과 정당성)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제1조 (북한과도임시정부 수립의 필연성과 정당성)</span>
+                            <span class="lang-en">Article 1 (Inevitability and Legitimacy of the Establishment of the Provisional Government)</span>
+                        </span>
                         <div class="article-content">
-                            ① (보호책임의 방기와 주권의 박탈) 국가는 국민의 생명과 자유를 보호할 때만 주권을 행사할 정당성을 가진다. 그러나 현존하는 북한의 국가 시스템은 자국민을 보호하기는커녕 국가 권력을 동원하여 조직적으로 생명을 박탈하고 자유를 억압하는 가해자가 되었다. 이에 국제법상 '보호책임(Responsibility to Protect, R2P)' 원칙에 따라 기존 정권의 주권은 효력을 상실하였으며, 주민을 보호할 새로운 주체로서 북한과도임시정부의 수립은 선택이 아닌 법적·도덕적 필연이다.<br>
+                            <span class="lang-ko">① (보호책임의 방기와 주권의 박탈) 국가는 국민의 생명과 자유를 보호할 때만 주권을 행사할 정당성을 가진다. 그러나 현존하는 북한의 국가 시스템은 자국민을 보호하기는커녕 국가 권력을 동원하여 조직적으로 생명을 박탈하고 자유를 억압하는 가해자가 되었다. 이에 국제법상 '보호책임(Responsibility to Protect, R2P)' 원칙에 따라 기존 정권의 주권은 효력을 상실하였으며, 주민을 보호할 새로운 주체로서 북한과도임시정부의 수립은 선택이 아닌 법적·도덕적 필연이다.<br>
                             ② (저항권과 자위권의 발동) 현 정권은 상식과 이성을 거부하고 폭력으로 통치하는 범죄 집단으로 전락하였다. 이에 북한 주민과 임시정부는 압제로부터 생존하기 위해 천부적인 자위권(Self-Defense)과 저항권을 발동하며, 이는 국제 인권 선언과 문명사회의 규범에 부합하는 합법적인 권리 행사이다.<br>
-                            ③ (상식적 정부의 복원) 본 정부는 비이성적이고 야만적인 독재 시스템을 해체하고, 합리적이고 합법적이며 이성적이고 상식적인 헌정 질서를 수립하기 위해 존재한다.
+                            ③ (상식적 정부의 복원) 본 정부는 비이성적이고 야만적인 독재 시스템을 해체하고, 합리적이고 합법적이며 이성적이고 상식적인 헌정 질서를 수립하기 위해 존재한다.</span>
+                            <span class="lang-en">
+                                ① (Abandonment of Responsibility to Protect and Deprivation of Sovereignty) A state possesses the legitimacy to exercise sovereignty only when it protects the lives and freedom of its people. However, the existing state system of North Korea has become a perpetrator that systematically deprives lives and suppresses freedom by mobilizing state power, rather than protecting its own people. Accordingly, under the international legal principle of 'Responsibility to Protect (R2P),' the sovereignty of the existing regime has lost its validity, and the establishment of the Provisional Government as a new entity to protect the residents is not a choice but a legal and moral inevitability.<br>
+                                ② (Exercise of Right of Resistance and Self-Defense) The current regime has degenerated into a criminal group that rejects common sense and reason and rules by violence. Accordingly, North Korean residents and the Provisional Government invoke the natural rights of Self-Defense and Resistance to survive oppression, which is a legitimate exercise of rights consistent with the Universal Declaration of Human Rights and norms of civilized society.<br>
+                                ③ (Restoration of Common Sense Government) This Government exists to dismantle the irrational and barbaric dictatorship system and to establish a rational, legal, reasonable, and commonsensical constitutional order.
+                            </span>
                         </div>
                     </div>
                     <div>
-                        <span class="article-title">제2조 (현 정권의 정당성 상실에 대한 근거)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제2조 (현 정권의 정당성 상실에 대한 근거)</span>
+                            <span class="lang-en">Article 2 (Grounds for the Loss of Legitimacy of the Current Regime)</span>
+                        </span>
                         <div class="article-content">
-                            북한과도임시정부는 다음 각 호의 사유로 현 북한 정권이 '실패한 국가'를 넘어 통치 자격을 영구히 상실했음을 선언한다.<br>
+                            <span class="lang-ko">북한과도임시정부는 다음 각 호의 사유로 현 북한 정권이 '실패한 국가'를 넘어 통치 자격을 영구히 상실했음을 선언한다.<br>
                             1. 반인도적 범죄의 국가 정책화: 살인, 고문, 강간 등 반인도적 범죄를 국가 정책으로 채택.<br>
                             2. 현대판 노예제 운영: 정치범수용소를 통해 주민을 강제 노동과 고문에 처함.<br>
                             3. 식량권의 고의적 박탈: 정권 유지를 위해 대규모 아사를 방치하거나 유도.<br>
@@ -172,81 +314,145 @@
                             7. 세습 독재와 신정 체제: 공화국 명칭을 도용하여 혈통 세습 독재 유지.<br>
                             8. 정보의 차단과 우민화: 외부 세계와의 정보 소통 차단.<br>
                             9. 외국인 납치 및 테러: 국제법 질서 위반.<br>
-                            10. 해외 노동자 착취: 인신매매성 국가 사업 운영.
+                            10. 해외 노동자 착취: 인신매매성 국가 사업 운영.</span>
+                            <span class="lang-en">
+                                The Provisional Government declares that the current North Korean regime has gone beyond a 'Failed State' to permanently lose its qualification to rule for the following reasons:<br>
+                                State Policy of Crimes Against Humanity: Systematically committing crimes against humanity such as murder, torture, rape, and forced abortion as state policy for regime maintenance.<br>
+                                Operation of Modern-day Slavery: Violating the international peremptory norm prohibiting slavery by detaining hundreds of thousands of residents without trial in political prison camps (Kwanliso) and subjecting them to forced labor and torture.<br>
+                                Deliberate Deprivation of Right to Food: Politicizing food distribution for regime maintenance and infringing on residents' right to survival by neglecting or inducing mass starvation.<br>
+                                Eradication of Freedom of Religion and Thought: Inflicting genocidal persecution by defining groups with specific religions or beliefs as enemies and attempting to exterminate them.<br>
+                                Total Blockade of Freedom of Movement: Banning domestic movement and overseas departure, and turning the territory into a massive prison by shooting or punishing residents attempting to defect.<br>
+                                Absence of Rule of Law: Reducing the judiciary to a tool of the Party and committing judicial murder through summary and public executions without fair trials.<br>
+                                Hereditary Dictatorship and Theocracy: Maintaining a pre-modern hereditary dictatorship by stealing the title of a republic, and paralyzing the people's reason by deifying the leader.<br>
+                                Information Blockade and Obscurantism: Infringing on the people's right to know and self-determination by blocking information communication with the outside world.<br>
+                                Abduction of Foreigners and Terror: Directly violating international legal order by abducting citizens of other countries and supporting international terrorism.<br>
+                                Exploitation of Overseas Workers: Operating human trafficking-like state businesses by sending citizens overseas, exploiting their wages, and misappropriating them as funds for regime maintenance.
+                            </span>
                         </div>
                     </div>
                     <div>
-                        <span class="article-title">제3조 (글로벌 시민 국가의 정의)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제3조 (글로벌 시민 국가의 정의)</span>
+                            <span class="lang-en">Article 3 (Definition of Global Citizen State)</span>
+                        </span>
                         <div class="article-content">
-                            ① 북한과도임시정부가 지향하는 국가는 혈통주의와 배타적 민족주의를 거부하고, 자유, 민주주의, 인권의 가치를 공유하는 전 세계 모든 이들에게 열려 있는 '글로벌 시민 국가'이다.<br>
-                            ② 국가는 인종, 피부색, 출신 국가에 관계없이 본 헌법의 가치에 동의하고 국가 건설에 기여하고자 하는 세계 시민을 포용한다.
+                            <span class="lang-ko">① 북한과도임시정부가 지향하는 국가는 혈통주의와 배타적 민족주의를 거부하고, 자유, 민주주의, 인권의 가치를 공유하는 전 세계 모든 이들에게 열려 있는 '글로벌 시민 국가'이다.<br>
+                            ② 국가는 인종, 피부색, 출신 국가에 관계없이 본 헌법의 가치에 동의하고 국가 건설에 기여하고자 하는 세계 시민을 포용한다.</span>
+                            <span class="lang-en">① The state aimed for by the Provisional Government rejects jus sanguinis (right of blood) and exclusive nationalism, and is a 'Global Citizen State' open to everyone around the world who shares the values of freedom, democracy, and human rights.<br>
+                            ② The State embraces global citizens who agree with the values of this Constitution and wish to contribute to nation-building, regardless of race, skin color, or country of origin.</span>
                         </div>
                     </div>
                     <div>
-                        <span class="article-title">제4조 (외국인의 시민권 및 공직 진출)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제4조 (외국인의 시민권 및 공직 진출)</span>
+                            <span class="lang-en">Article 4 (Citizenship and Public Office for Foreigners)</span>
+                        </span>
                         <div class="article-content">
-                            ① 북한과도임시정부 헌법에 동의하고, 독재 정권의 붕괴, 외교적 고립 탈피, 경제 재건 등에 지대한 공헌을 한 외국인은 그 출신, 민족, 국적에 상관없이 본인의 의사에 따라 시민이 될 수 있다.<br>
-                            ② 제1항에 따라 시민이 된 자는 장관, 차관, 국회의원, 대법관 등 정부의 주요 공직에 선출되거나 임명될 수 있는 피선거권과 공무 담임권을 내국인과 동등하게 보장받는다.
+                            <span class="lang-ko">① 북한과도임시정부 헌법에 동의하고, 독재 정권의 붕괴, 외교적 고립 탈피, 경제 재건 등에 지대한 공헌을 한 외국인은 그 출신, 민족, 국적에 상관없이 본인의 의사에 따라 시민이 될 수 있다.<br>
+                            ② 제1항에 따라 시민이 된 자는 장관, 차관, 국회의원, 대법관 등 정부의 주요 공직에 선출되거나 임명될 수 있는 피선거권과 공무 담임권을 내국인과 동등하게 보장받는다.</span>
+                            <span class="lang-en">① Foreigners who agree to the Constitution of the Provisional Government and have made significant contributions to the collapse of the dictatorship, escape from diplomatic isolation, or economic reconstruction, etc., may become citizens according to their will, regardless of their origin, ethnicity, or nationality.<br>
+                            ② Persons who become citizens pursuant to Paragraph 1 are guaranteed the right to be elected and the right to hold public office equal to nationals, including major government posts such as Ministers, Vice Ministers, Members of Parliament, and Supreme Court Justices.</span>
                         </div>
                     </div>
                     <div>
-                        <span class="article-title">제5조 (임시정부의 주체적 역할)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제5조 (임시정부의 주체적 역할)</span>
+                            <span class="lang-en">Article 5 (Subjective Role of the Provisional Government)</span>
+                        </span>
                         <div class="article-content">
-                            북한과도임시정부는 단순히 미래를 준비하는 과도기적 관리자가 아니라, 전 인민적인 봉기를 조직하고 지원하며, 독재 정권의 폭력에 맞서 싸우는 능동적인 주체로서의 의무와 책임을 다한다.
+                            <span class="lang-ko">북한과도임시정부는 단순히 미래를 준비하는 과도기적 관리자가 아니라, 전 인민적인 봉기를 조직하고 지원하며, 독재 정권의 폭력에 맞서 싸우는 능동적인 주체로서의 의무와 책임을 다한다.</span>
+                            <span class="lang-en">The Provisional Government fulfills its duties and responsibilities as an active subject that organizes and supports pan-national uprisings and fights against the violence of the dictatorship, rather than merely being a transitional manager preparing for the future.</span>
+                        </div>
+                    </div>
+                    
+                    <h4 class="chapter-title">
+                        <span class="lang-ko">제2장 국민의 권리와 의무</span><span class="lang-en">Chapter 2: Rights and Duties of Citizens</span>
+                    </h4>
+                    <div>
+                        <span class="article-title">
+                            <span class="lang-ko">제6조 (인간의 존엄과 가치)</span>
+                            <span class="lang-en">Article 6 (Human Dignity and Value)</span>
+                        </span>
+                        <div class="article-content">
+                            <span class="lang-ko">모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를 가진다.</span>
+                            <span class="lang-en">All citizens have dignity and value as human beings and have the right to pursue happiness.</span>
                         </div>
                     </div>
                     <div>
-                        <span class="article-title">제6조 (인간의 존엄과 가치)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제7조 (평등권)</span>
+                            <span class="lang-en">Article 7 (Right to Equality)</span>
+                        </span>
                         <div class="article-content">
-                            모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를 가진다. 국가는 개인이 가지는 불가침의 기본적 인권을 확인하고 이를 보장할 의무를 진다.
-                        </div>
-                    </div>
-                    <div>
-                        <span class="article-title">제7조 (평등권)</span>
-                        <div class="article-content">
-                            모든 국민은 법 앞에 평등하다. 성별, 종교, 인종, 사회적 신분 또는 과거의 출신 성분(성분 제도)에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에서 차별을 받지 아니한다.
+                            <span class="lang-ko">모든 국민은 법 앞에 평등하다. 성별, 종교, 인종, 사회적 신분 또는 과거의 출신 성분(성분 제도)에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에서 차별을 받지 아니한다.</span>
+                            <span class="lang-en">All citizens are equal before the law. Discrimination based on gender, religion, race, social status, or songbun (class origin) is strictly prohibited.</span>
                         </div>
                     </div>
 
-                    <h4 class="chapter-title">제3장 과거사 청산</h4>
+                    <h4 class="chapter-title">
+                        <span class="lang-ko">제3장 과거사 청산</span><span class="lang-en">Chapter 3: Liquidation of the Past (Lustration)</span>
+                    </h4>
                     <div>
-                        <span class="article-title">제17조 (공직 취임 제한)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제17조 (공직 취임 제한)</span>
+                            <span class="lang-en">Article 17 (Restriction on Holding Public Office)</span>
+                        </span>
                         <div class="article-content font-bold text-red-700 bg-red-50 p-6 rounded-xl border border-red-200 text-justify">
-                            북한 독재 정권의 고위직(노동당 중앙위, 보위부, 군 장성 등)을 역임했거나, 대량 학살, 고문, 강제 수용소 운영 등 반인륜적 범죄에 가담한 자는 향후 50년 동안 어떠한 선출직 및 임명직 공직에도 취임할 수 없다. 이는 사면이나 감형의 대상이 되지 않는다.
+                            <span class="lang-ko">북한 독재 정권의 고위직(노동당 중앙위, 보위부, 군 장성 등)을 역임했거나, 대량 학살, 고문, 강제 수용소 운영 등 반인륜적 범죄에 가담한 자는 향후 50년 동안 어떠한 선출직 및 임명직 공직에도 취임할 수 없다. 이는 사면이나 감형의 대상이 되지 않는다.</span>
+                            <span class="lang-en">Those who held high-ranking positions in the North Korean dictatorship (Workers' Party Central Committee, State Security Department, Generals, etc.) or participated in crimes against humanity such as massacres, torture, or operation of concentration camps are prohibited from holding any elected or appointed public office for the next 50 years. This shall not be subject to amnesty or commutation.</span>
                         </div>
                     </div>
 
-                    <h4 class="chapter-title">제4장 경제와 재정</h4>
+                    <h4 class="chapter-title">
+                        <span class="lang-ko">제4장 경제와 재정</span><span class="lang-en">Chapter 4: Economy and Finance</span>
+                    </h4>
                     <div>
-                        <span class="article-title">제21조 (전면적 대외 개방과 시장 경제)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제21조 (전면적 대외 개방과 시장 경제)</span>
+                            <span class="lang-en">Article 21 (Total External Opening)</span>
+                        </span>
                         <div class="article-content">
-                            국가는 자유로운 시장 경제 체제를 전면적으로 도입하며, 전 세계 자본과 기술에 대하여 전면적인 개방 정책을 시행한다. 사유 재산권은 국가가 침해할 수 없는 신성한 권리로 보장되며, 모든 경제 활동의 자유를 법적으로 담보한다.
+                            <span class="lang-ko">국가는 자유로운 시장 경제 체제를 전면적으로 도입하며, 전 세계 자본과 기술에 대하여 전면적인 개방 정책을 시행한다. 사유 재산권은 국가가 침해할 수 없는 신성한 권리로 보장되며, 모든 경제 활동의 자유를 법적으로 담보한다.</span>
+                            <span class="lang-en">The State completely opens all industrial sectors, including economy, finance, infrastructure construction, mineral resource mining, and energy, to the world. Barriers to entry for foreign capital shall be abolished, and free investment shall be guaranteed.</span>
                         </div>
                     </div>
                     <div>
-                        <span class="article-title">제23조 (법정 통화)</span>
+                        <span class="article-title">
+                            <span class="lang-ko">제23조 (법정 통화)</span>
+                            <span class="lang-en">Article 23 (Legal Tender)</span>
+                        </span>
                         <div class="article-content">
-                            ① 기존 북한 원화는 가치 저장 및 교환 수단으로서의 기능을 상실했으므로 전면 폐기한다.<br>
-                            ② 초인플레이션과 외환 위기를 방지하고 국제 금융 시스템으로의 즉각적인 편입을 위하여, 미국 달러(USD) 또는 그에 연동된 안정적인 디지털 화폐(USDC)를 국가의 공식 법정 통화로 채택한다.
+                            <span class="lang-ko">① 기존 북한 원화는 가치 저장 및 교환 수단으로서의 기능을 상실했으므로 전면 폐기한다.<br>
+                            ② 초인플레이션과 외환 위기를 방지하고 국제 금융 시스템으로의 즉각적인 편입을 위하여, 미국 달러(USD) 또는 그에 연동된 안정적인 디지털 화폐(USDC)를 국가의 공식 법정 통화로 채택한다.</span>
+                            <span class="lang-en">① The existing North Korean Won shall be discarded.<br>
+                            ② To prevent hyperinflation and foreign exchange crises, and to access the international financial system actively and stabilize the economic system rapidly, the US Dollar (USD) or a stable digital currency pegged to the US Dollar (USDC) is adopted as the official legal tender of the State.</span>
                         </div>
                     </div>
 
-                    <h4 class="chapter-title">제5장 무장력 창설: 자유조선군 (FJA)</h4>
+                    <h4 class="chapter-title">
+                        <span class="lang-ko">제5장 무장력 창설: 자유조선군 (FJA)</span><span class="lang-en">Chapter 5: Creation of Armed Forces of the Provisional Government: Free Joseon Army (FJA)</span>
+                    </h4>
                     <div class="article-content space-y-4">
-                        <p><strong>제26조 (지위)</strong> 자유조선군은 국가 폭력으로부터 시민의 생명과 자유를 즉각적으로 구원하는 행동하는 양심의 수단이다.</p>
-                        <p><strong>제27조 (설립 근거)</strong> 무력 행사는 자위권(Self-Defense)과 보호책임(R2P) 원칙에 근거한 합법적 수단이다.</p>
-                        <p><strong>제28조 (최우선 임무)</strong> 시민 봉기의 지원, 정치범수용소 타격 및 수감자 구출, 국가 폭력으로부터의 시민 보호를 최우선으로 한다.</p>
-                        <p><strong>제29조 (국제법 준수)</strong> 제네바 협약 등 국제인도법을 엄격히 준수하며, 민간인 공격을 절대 금지하고 투항자를 인도적으로 대우한다.</p>
-                        <p><strong>제30조 (정치적 중립)</strong> 군은 정치에 개입할 수 없으며, 임시정부 행정위원회의 엄격한 문민 통제를 받는다.</p>
-                        <p><strong>제35조 (국가 방위군 승계)</strong> 자유조선군은 정식 정부 수립 후 정규 국가 방위군으로 재편 및 승계된다.</p>
+                        <p><strong class="lang-ko">제26조 (자유조선군의 지위)</strong> <span class="lang-ko">자유조선군은 국가 폭력으로부터 시민의 생명과 자유를 즉각적으로 구원하는 행동하는 양심의 수단이다.</span> <strong class="lang-en">Article 26 (Status of the Free Joseon Army)</strong> <span class="lang-en">The Free Joseon Army (FJA) is not a passive reserve force waiting and preparing for the future, but the last hope and a means of acting conscience to immediately save the lives and freedom of citizens deprived by existing state violence.</span></p>
+                        <p><strong class="lang-ko">제27조 (설립 근거와 정당성)</strong> <span class="lang-ko">무력 행사는 자위권(Self-Defense)과 보호책임(R2P) 원칙에 근거한 합법적 수단이다.</span> <strong class="lang-en">Article 27 (Basis of Establishment and Legitimacy)</strong> <span class="lang-en">The use of force by the Free Joseon Army is a legal and justifiable means based on the right of self-defense and the principle of Responsibility to Protect (R2P) to protect the people from the dictatorship's organized slaughter and human rights abuses.</span></p>
+                        <p><strong class="lang-ko">제28조 (최우선 임무)</strong> <span class="lang-ko">시민 봉기의 지원, 정치범수용소 타격 및 수감자 구출, 국가 폭력으로부터의 시민 보호를 최우선으로 한다.</span> <strong class="lang-en">Article 28 (Primary Mission)</strong> <span class="lang-en">The primary mission of the Free Joseon Army is to stand at the vanguard of citizens' uprisings against the dictatorship, strike political prison camps and detention facilities to rescue prisoners, and protect the lives of citizens at scenes of state violence such as public executions.</span></p>
+                        <p><strong class="lang-ko">제29조 (국제법 준수)</strong> <span class="lang-ko">제네바 협약 등 국제인도법을 엄격히 준수하며, 민간인 공격을 절대 금지하고 투항자를 인도적으로 대우한다.</span> <strong class="lang-en">Article 29 (Observance of International Law)</strong> <span class="lang-en">The Free Joseon Army strictly observes international humanitarian law, including the Geneva Conventions. Attacks on civilians are prohibited, and even enemy combatants who surrender or are incapacitated (hors de combat) are treated humanely.</span></p>
+                        <p><strong class="lang-ko">제30조 (정치적 중립)</strong> <span class="lang-ko">군은 정치에 개입할 수 없으며, 임시정부 행정위원회의 엄격한 문민 통제를 받는다.</span> <strong class="lang-en">Article 30 (Political Neutrality and Civilian Control)</strong> <span class="lang-en">The military does not intervene in politics and is under the command of the Provisional Government under the principle of civilian control.</span></p>
+                        <p><strong class="lang-ko">제31조 (대량살상무기 폐기 지원)</strong> <span class="lang-ko">핵무기 및 생화학무기를 안전하게 통제하고 국제기구에 인계하여 폐기하는 업무를 전적으로 지원한다.</span> <strong class="lang-en">Article 31 (Support for WMD Disposal)</strong> <span class="lang-en">The Free Joseon Army performs the mission of safely controlling nuclear and biochemical weapons secured during operations, handing them over to international organizations, and disposing of them.</span></p>
+                        <p><strong class="lang-ko">제32조 (외국인 지원병)</strong> <span class="lang-ko">본 헌법에 동의하는 외국인 지원병의 입대를 허용하며 정규군과 동일하게 예우한다.</span> <strong class="lang-en">Article 32 (Foreign Volunteers)</strong> <span class="lang-en">Enlistment of foreign volunteers who wish to fight together for freedom and human rights is permitted, and they receive the same treatment as the regular army.</span></p>
+                        <p><strong class="lang-ko">제33조 (귀순 군인 통합)</strong> <span class="lang-ko">귀순하는 기존 군인은 엄격한 심사 후 편입시키거나 건국 유공자로 예우한다.</span> <strong class="lang-en">Article 33 (Integration of Existing Soldiers)</strong> <span class="lang-en">Soldiers who defect against the dictatorship are incorporated into the Free Joseon Army after screening or are treated with honor as contributors to the founding of the nation.</span></p>
+                        <p><strong class="lang-ko">제34조 (민병대 통합)</strong> <span class="lang-ko">각 지역에서 자발적으로 형성된 민병대는 자유조선군의 지휘 체계로 편입된다.</span> <strong class="lang-en">Article 34 (Militias and Vigilante Groups)</strong> <span class="lang-en">Local militias may be organized for the protection of residents, and they are incorporated into the command structure of the Free Joseon Army.</span></p>
+                        <p><strong class="lang-ko">제35조 (국가 방위군 승계)</strong> <span class="lang-ko">자유조선군은 정식 정부 수립 후 정규 국가 방위군으로 재편 및 승계된다.</span> <strong class="lang-en">Article 35 (Succession to National Defense Force)</strong> <span class="lang-en">The Free Joseon Army shall be reorganized as the National Defense Force of the new state after the establishment of the formal government.</span></p>
                     </div>
 
-                    <h4 class="chapter-title">제6장 통치 구조</h4>
+                    <h4 class="chapter-title">
+                        <span class="lang-ko">제6장 통치 구조</span><span class="lang-en">Chapter 6: Governance Structure</span>
+                    </h4>
                     <div class="article-content space-y-4">
-                        <p><strong>제36조 (행정 위원회)</strong> 행정권을 행사하며 위원장은 국가를 대표한다. 각 내각 부처를 통할하여 실질적인 국정을 운영하고 정책을 집행한다.</p>
-                        <p><strong>제37조 (임시 입법 의회)</strong> 국민의 의사를 반영하여 법률을 제정하고, 행정부의 예산 집행과 정책 결정 과정을 감시하며 견제한다.</p>
-                        <p><strong>제38조 (사법부)</strong> 독립된 재판권을 행사한다. 특히 북한 주민에 대하여 반인륜적 범죄 및 반인도적인 범죄를 저지른 당사자들을 추적, 기소, 처벌하는 것을 핵심 사명으로 삼아 법치주의를 확립한다.</p>
-                        <p><strong>제39조 (국제 자문단)</strong> 전 세계의 저명한 정치, 경제, 법률 인사들로 구성되어 국가 건설의 주요 전략과 외교 정책에 대한 전문적인 자문을 제공한다.</p>
+                        <p><strong class="lang-ko">제36조 (행정 위원회)</strong> <span class="lang-ko">행정권을 행사하며 위원장은 국가를 대표한다. 각 내각 부처를 통할하여 실질적인 국정을 운영하고 정책을 집행한다.</span> <strong class="lang-en">Article 36 (Administrative Committee of the Provisional Government)</strong> <span class="lang-en">The executive power of the Provisional Government belongs to the Administrative Committee, and the Chairman represents the State.</span></p>
+                        <p><strong class="lang-ko">제37조 (임시 입법 의회)</strong> <span class="lang-ko">국민의 의사를 반영하여 법률을 제정하고, 행정부의 예산 집행과 정책 결정 과정을 감시하며 견제한다.</span> <strong class="lang-en">Article 37 (Legislative Assembly)</strong> <span class="lang-en">The Interim Legislative Assembly represents the people, enacts laws, and checks the administration.</span></p>
+                        <p><strong class="lang-ko">제38조 (사법부)</strong> <span class="lang-ko">독립된 재판권을 행사한다. 특히 북한 주민에 대하여 반인륜적 범죄 및 반인도적인 범죄를 저지른 당사자들을 추적, 기소, 처벌하는 것을 핵심 사명으로 삼아 법치주의를 확립한다.</span> <strong class="lang-en">Article 38 (Judiciary)</strong> <span class="lang-en">Judicial power belongs to the courts, and judges judge independently according to the Constitution and laws.</span></p>
+                        <p><strong class="lang-ko">제39조 (국제 자문단)</strong> <span class="lang-ko">전 세계의 저명한 정치, 경제, 법률 인사들로 구성되어 국가 건설의 주요 전략과 외교 정책에 대한 전문적인 자문을 제공한다.</span> <strong class="lang-en">Article 39 (International Advisory Group)</strong> <span class="lang-en">An International Advisory Group composed of foreign experts is established to seek advice from the international community on major policy decisions.</span></p>
                     </div>
                 </div>
             </div>
@@ -258,75 +464,139 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-16 text-center">
                 <h2 class="text-3xl font-bold text-slate-900 serif">내각구조 및 인사영입</h2>
-                <p class="text-slate-600 mt-4">국적과 인종, 민족을 초월하여 인류애와 사명감, 전문성, 그리고 회생 정신을 겸비한 인사들로 구성된 체계적인 조직을 통해 북한과도임시정부의 임무를 수행합니다.</p>
+                <p class="text-slate-600 mt-4">
+                    <span class="lang-ko">국적과 인종, 민족을 초월하여 인류애와 사명감, 전문성, 그리고 회생 정신을 겸비한 인사들로 구성된 체계적인 조직을 통해 북한과도임시정부의 임무를 수행합니다.</span>
+                    <span class="lang-en">We execute the mission of the Provisional Government of North Korea through a systematic organization composed of personnel transcending nationality, race, and ethnicity, equipped with humanity, a sense of duty, professionalism, and a spirit of revitalization.</span>
+                </p>
             </div>
             <div class="grid lg:grid-cols-2 gap-12">
                 <div>
                     <h3 class="text-xl font-bold mb-6 flex items-center text-slate-900">
-                        <i data-lucide="network" class="w-5 h-5 mr-2 text-sky-600"></i>통치 기구 요약
+                        <i data-lucide="network" class="w-5 h-5 mr-2 text-sky-600"></i>
+                        <span class="lang-ko">헌법상 통치 기구 (Constitutional Organs)</span>
+                        <span class="lang-en">Constitutional Organs</span>
                     </h3>
                     <div class="space-y-4 text-sm text-slate-700">
                         <div class="p-5 bg-white border-l-4 border-slate-800 rounded shadow-sm">
-                            <h4 class="font-bold text-slate-900">행정 위원회 (Administrative Committee)</h4>
-                            <p class="mt-1">제36조: 행정권을 행사하며 위원장은 국가를 대표함. 각 부처를 통할하여 국정을 운영.</p>
+                            <h4 class="font-bold text-slate-900">
+                                <span class="lang-ko">행정 위원회 (Administrative Committee)</span>
+                                <span class="lang-en">Administrative Committee</span>
+                            </h4>
+                            <p class="mt-1">
+                                <span class="lang-ko">제36조: 행정권을 행사하며 위원장은 국가를 대표함. 각 부처를 통할하여 국정을 운영.</span>
+                                <span class="lang-en">Art. 36: Exercises executive power; the Chairman represents the State. Manages state affairs.</span>
+                            </p>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="p-4 bg-white border-l-4 border-sky-600 rounded shadow-sm">
-                                <h4 class="font-bold text-slate-900">임시 입법 의회</h4>
-                                <p class="mt-1">제37조: 국민 대표, 법률 제정 및 행정부 견제.</p>
+                                <h4 class="font-bold text-slate-900">
+                                    <span class="lang-ko">임시 입법 의회</span>
+                                    <span class="lang-en">Legislative Assembly</span>
+                                </h4>
+                                <p class="mt-1">
+                                    <span class="lang-ko">제37조: 국민 대표, 법률 제정 및 행정부 견제.</span>
+                                    <span class="lang-en">Art. 37: Enacts laws and checks the administration.</span>
+                                </p>
                             </div>
                             <div class="p-4 bg-white border-l-4 border-sky-600 rounded shadow-sm">
-                                <h4 class="font-bold text-slate-900">사법부</h4>
-                                <p class="mt-1">제38조: 독립된 재판권 행사. 북한 주민에 대한 반인륜적·반인도적 범죄 행위자 기소 및 처벌.</p>
+                                <h4 class="font-bold text-slate-900">
+                                    <span class="lang-ko">사법부</span>
+                                    <span class="lang-en">Judiciary</span>
+                                </h4>
+                                <p class="mt-1">
+                                    <span class="lang-ko">제38조: 독립된 재판권 행사. 북한 주민에 대한 반인륜적·반인도적 범죄 행위자 기소 및 처벌.</span>
+                                    <span class="lang-en">Art. 38: Independent exercise of judicial power. Prosecution and punishment of perpetrators of crimes against humanity against North Korean residents.</span>
+                                </p>
                             </div>
                         </div>
                         <div class="p-5 bg-white border-l-4 border-slate-700 rounded shadow-sm">
-                            <h4 class="font-bold text-slate-900">국방부 (자유조선군)</h4>
-                            <p class="mt-1">제5장: 자유조선군(FJA) 통솔 및 시민 생명 보호.</p>
+                            <h4 class="font-bold text-slate-900">
+                                <span class="lang-ko">국방부 (자유조선군)</span>
+                                <span class="lang-en">Ministry of Defense (FJA)</span>
+                            </h4>
+                            <p class="mt-1">
+                                <span class="lang-ko">제5장: 자유조선군(FJA) 통솔 및 시민 생명 보호.</span>
+                                <span class="lang-en">Chapter 5: Command FJA & protect citizens.</span>
+                            </p>
                         </div>
                         <div class="p-5 bg-white border-l-4 border-sky-500 rounded shadow-sm">
-                            <h4 class="font-bold text-slate-900">국제 자문단</h4>
-                            <p class="mt-1">제39조: 주요 정책 결정에 대한 국제사회의 전문적 조언.</p>
+                            <h4 class="font-bold text-slate-900">
+                                <span class="lang-ko">국제 자문단</span>
+                                <span class="lang-en">International Advisory Council</span>
+                            </h4>
+                            <p class="mt-1">
+                                <span class="lang-ko">제39조: 주요 정책 결정에 대한 국제사회의 전문적 조언.</span>
+                                <span class="lang-en">Art. 39: Expert global advice on major policy decisions.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-6 flex items-center text-slate-900">
-                        <i data-lucide="users" class="w-5 h-5 mr-2 text-sky-600"></i>인재 영입 전략 (Recruitment)
+                        <i data-lucide="users" class="w-5 h-5 mr-2 text-sky-600"></i>
+                        <span class="lang-ko">인재 영입 전략 (Recruitment)</span>
+                        <span class="lang-en">Recruitment Strategy</span>
                     </h3>
                     <div class="grid grid-cols-1 gap-4 text-sm">
                         <div class="flex items-start p-4 bg-white rounded border border-slate-200">
                             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 mr-4">A</div>
                             <div>
-                                <h4 class="font-bold">탈북민 인사</h4>
-                                <p class="text-slate-500 mt-1">헌법의 가치에 동의하며, 인권 운동가 및 기업가 등 사회 각 분야에서 전문성과 인지도를 갖춘 덕목있는 탈북민 활동가</p>
+                                <h4 class="font-bold">
+                                    <span class="lang-ko">탈북민 인사</span>
+                                    <span class="lang-en">North Korean Defectors</span>
+                                </h4>
+                                <p class="text-slate-500 mt-1">
+                                    <span class="lang-ko">헌법의 가치에 동의하며, 인권 운동가 및 기업가 등 사회 각 분야에서 전문성과 인지도를 갖춘 덕목있는 탈북민 활동가</span>
+                                    <span class="lang-en">North Korean defector activists, entrepreneurs, and experts in various fields who agree with the values of the Constitution and possess expertise, public recognition, and virtue.</span>
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start p-4 bg-white rounded border border-slate-200">
                             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 mr-4">B</div>
                             <div>
-                                <h4 class="font-bold">전문직 탈북 1.5/2세대</h4>
-                                <p class="text-slate-500 mt-1">자유 세계에서 체계적인 교육을 받은 변호사, 회계사, IT 전문가 등으로서, 국제적 감각과 전문성을 바탕으로 실무를 주도하고 국제 사회와의 가교 역할을 수행하는 인재</p>
+                                <h4 class="font-bold">
+                                    <span class="lang-ko">전문직 탈북 1.5/2세대</span>
+                                    <span class="lang-en">Professional 1.5/2nd Gen</span>
+                                </h4>
+                                <p class="text-slate-500 mt-1">
+                                    <span class="lang-ko">자유 세계에서 체계적인 교육을 받은 변호사, 회계사, IT 전문가 등으로서, 국제적 감각과 전문성을 바탕으로 실무를 주도하고 국제 사회와의 가교 역할을 수행하는 인재</span>
+                                    <span class="lang-en">Lawyers, accountants, and IT experts educated in the free world who lead practical operations with international sense and serve as a bridge to the global community.</span>
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start p-4 bg-white rounded border border-slate-200">
                             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 mr-4">C</div>
                             <div>
-                                <h4 class="font-bold">국제 사회 전문가</h4>
-                                <p class="text-slate-500 mt-1">북한 문제, 국제법, 경제 개발 전문 외국인 관료/학자</p>
+                                <h4 class="font-bold">
+                                    <span class="lang-ko">국제 사회 전문가</span>
+                                    <span class="lang-en">International Experts</span>
+                                </h4>
+                                <p class="text-slate-500 mt-1">
+                                    <span class="lang-ko">북한 문제, 국제법, 경제 개발 전문 외국인 관료/학자</span>
+                                    <span class="lang-en">Foreign officials/scholars in NK issues, law, economy.</span>
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start p-4 bg-white rounded border border-slate-200">
                             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 mr-4">D</div>
                             <div>
-                                <h4 class="font-bold">북한 내부 인사</h4>
-                                <p class="text-slate-500 mt-1">북한 영토 내에 거주하며 헌법의 숭고한 가치에 동의하고, 북한과도임시정부의 과업 완수를 위해 비밀리에 조직적 기반을 구축하여 실질적인 반체제 활동을 주도하는 내부 핵심 인사</p>
+                                <h4 class="font-bold">
+                                    <span class="lang-ko">북한 내부 인사</span>
+                                    <span class="lang-en">Personnel Inside North Korea</span>
+                                </h4>
+                                <p class="text-slate-500 mt-1">
+                                    <span class="lang-ko">북한 영토 내에 거주하며 헌법의 숭고한 가치에 동의하고, 북한과도임시정부의 과업 완수를 위해 비밀리에 조직적 기반을 구축하여 실질적인 반체제 활동을 주도하는 내부 핵심 인사</span>
+                                    <span class="lang-en">Key personnel residing within North Korea who share the values of the Constitution and lead organized anti-regime activities in secrecy to ensure the success of the Provisional Government.</span>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <p class="mt-8 text-xs text-slate-500 text-center italic">주: 본 조직도에 명시되지 않은 기타 내각 부처들은 향후 북한과도임시정부의 수도가 북한 영토 내로 이전되는 시점에 맞추어, 국가 재건의 로드맵과 행정 소요에 따라 정식으로 출범할 예정입니다.</p>
+            <p class="mt-8 text-xs text-slate-500 text-center italic">
+                <span class="lang-ko">주: 본 조직도에 명시되지 않은 기타 내각 부처들은 향후 북한과도임시정부의 수도가 북한 영토 내로 이전되는 시점에 맞추어, 국가 재건의 로드맵과 행정 소요에 따라 정식으로 출범할 예정입니다.</span>
+                <span class="lang-en">Note: Other cabinet ministries not listed here will be formally established in accordance with the roadmap for national reconstruction upon the relocation of the capital to North Korean territory.</span>
+            </p>
         </div>
     </section>
 
@@ -334,46 +604,112 @@
     <section id="roadmap" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-slate-900 serif">당면 과제와 로드맵</h2>
-                <p class="text-slate-600 mt-2">우리는 명확한 계획을 가지고 움직입니다.</p>
+                <h2 class="text-3xl font-bold text-slate-900 serif">
+                    <span class="lang-ko">당면 과제와 로드맵</span>
+                    <span class="lang-en">Tasks & Roadmap</span>
+                </h2>
+                <p class="text-slate-600 mt-2">
+                    <span class="lang-ko">우리는 명확한 계획을 가지고 움직입니다.</span>
+                    <span class="lang-en">We move forward with a clear, calculated plan.</span>
+                </p>
             </div>
             <div class="grid md:grid-cols-3 gap-8 text-sm leading-relaxed">
                 <!-- 1단계 -->
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-8 hover:border-sky-500 transition duration-300">
                     <div class="text-4xl font-black text-slate-200 mb-4">01</div>
-                    <h3 class="text-xl font-bold mb-4 text-sky-700">기반 구축 및 통합</h3>
+                    <h3 class="text-xl font-bold mb-4 text-sky-700">
+                        <span class="lang-ko">기반 구축 및 통합</span>
+                        <span class="lang-en">Foundation Phase</span>
+                    </h3>
                     <ul class="text-slate-600 space-y-2 list-disc list-inside">
-                        <li>북한과도임시정부 수립의 초석이 될 핵심 발기인 그룹 결성</li>
-                        <li>북한과도임시정부 준비위원회 공식 발족 및 체계적 조직 구성</li>
-                        <li>국제사회의 지지와 합의를 이끌어내기 위한 고위급 외교 및 협상 전개</li>
-                        <li>북한과도임시정부의 역사적 창립을 위한 실무 및 전략적 준비 완수</li>
+                        <li>
+                            <span class="lang-ko">북한과도임시정부 수립의 초석이 될 핵심 발기인 그룹 결성</span>
+                            <span class="lang-en">Formation of the core founding group serving as the cornerstone of the PGNK</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">북한과도임시정부 준비위원회 공식 발족 및 체계적 조직 구성</span>
+                            <span class="lang-en">Official launch of the Preparatory Committee and systematic organization</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">국제사회의 지지와 합의를 이끌어내기 위한 고위급 외교 및 협상 전개</span>
+                            <span class="lang-en">High-level diplomacy and negotiations to elicit international support and consensus</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">북한과도임시정부의 역사적 창립을 위한 실무 및 전략적 준비 완수</span>
+                            <span class="lang-en">Completion of practical and strategic preparations for the historic founding of the PGNK</span>
+                        </li>
                     </ul>
                 </div>
                 <!-- 2단계 -->
                 <div class="bg-white border-2 border-sky-600 rounded-xl p-8 shadow-xl transition transform hover:scale-105">
                     <div class="text-4xl font-black text-sky-100 mb-4">02</div>
-                    <h3 class="text-xl font-bold mb-4 text-sky-700">북한과도임시정부 창립</h3>
+                    <h3 class="text-xl font-bold mb-4 text-sky-700">
+                        <span class="lang-ko">북한과도임시정부 창립</span>
+                        <span class="lang-en">Establishment of the Provisional Gov.</span>
+                    </h3>
                     <ul class="text-slate-600 space-y-2 list-disc list-inside">
-                        <li>자유와 해방의 상징인 정부 수반의 공식 추대 및 대내외 천명</li>
-                        <li>숭고한 헌법 가치 수호를 위한 역사적 과업의 공식 개시 선언</li>
-                        <li>유엔(UN) 내 국가적 지위 획득 및 국제법상 합법 정부 승인을 향한 총력 외교전 전개</li>
-                        <li>준비된 내각의 즉각적인 국정 수행 및 행정 통제권 행사 시작</li>
-                        <li>유일 합법 정부로서의 주권 행사 및 2,500만 인민에 대한 무한 책임과 신성한 의무 이행</li>
-                        <li><strong>북한과도임시정부 무장력창설(자유조선군, FJA) - 행동하는 양심의 최후의 수단</strong></li>
+                        <li>
+                            <span class="lang-ko">자유와 해방의 상징인 정부 수반의 공식 추대 및 대내외 천명</span>
+                            <span class="lang-en">Official inauguration and proclamation of the Head of State, the symbol of freedom and liberation</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">숭고한 헌법 가치 수호를 위한 역사적 과업의 공식 개시 선언</span>
+                            <span class="lang-en">Solemn declaration of the commencement of official duties to defend constitutional values</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">유엔(UN) 내 국가적 지위 획득 및 국제법상 합법 정부 승인을 향한 총력 외교전 전개</span>
+                            <span class="lang-en">All-out diplomatic campaign to secure UN state status and international legal recognition</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">준비된 내각의 즉각적인 국정 수행 및 행정 통제권 행사 시작</span>
+                            <span class="lang-en">Immediate execution of state affairs and exercise of administrative control by the prepared Cabinet</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">유일 합법 정부로서의 주권 행사 및 2,500만 인민에 대한 무한 책임과 신성한 의무 이행</span>
+                            <span class="lang-en">Exercise of sovereignty as the sole legitimate government and fulfillment of infinite responsibility toward the people</span>
+                        </li>
+                        <li>
+                            <strong class="lang-ko">북한과도임시정부 무장력창설(자유조선군, FJA) - 행동하는 양심의 최후의 수단</strong>
+                            <strong class="lang-en">Establishment of the PGNK Armed Forces (Free Joseon Army, FJA) - The Last Resort of Acting Conscience</strong>
+                        </li>
                     </ul>
                 </div>
                 <!-- 3단계 -->
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-8">
                     <div class="text-4xl font-black text-slate-200 mb-4">03</div>
-                    <h3 class="text-xl font-bold mb-4 text-sky-700">새 국가 건설</h3>
+                    <h3 class="text-xl font-bold mb-4 text-sky-700">
+                        <span class="lang-ko">새 국가 건설</span>
+                        <span class="lang-en">Building a New Nation</span>
+                    </h3>
                     <ul class="text-slate-600 space-y-2 list-disc list-inside">
-                        <li>보호책임(R2P)과 천부인권에 입각하여 불법 독재 체제를 종식시키기 위한 전 인민적 봉기 주도</li>
-                        <li>헌법상 보장된 자위권과 저항권을 발동하여 압제에 맞서고 정치범 수용소의 즉각적인 해체 및 모든 양심수 석방 단행</li>
-                        <li>헌법 제3장에 의거하여 김일성 일가 및 독재 부역자들에 대한 엄정한 사법적 단죄와 과거사 청산 단행</li>
-                        <li>주변국과의 평화협정 체결 및 국제사회와의 정상적인 외교 관계 회복을 통해 동북아 평화 체제의 핵심 일원으로 도약</li>
-                        <li>파탄난 경제를 복구하기 위해 사유 재산권 보장과 시장 경제 도입을 골자로 하는 획기적인 경제 부흥 정책 실행</li>
-                        <li>북한과도임시정부 내각 명단 확정 및 과도 통치 기구의 안정적 출범</li>
-                        <li>급변 사태 대비 비상 행동 계획 수립 및 질서 있는 체제 전환 주도</li>
+                        <li>
+                            <span class="lang-ko">보호책임(R2P)과 천부인권에 입각하여 불법 독재 체제를 종식시키기 위한 전 인민적 봉기 주도</span>
+                            <span class="lang-en">Leading a pan-national uprising to end the illegal dictatorship based on the Responsibility to Protect (R2P) and inherent human rights</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">헌법상 보장된 자위권과 저항권을 발동하여 압제에 맞서고 정치범 수용소의 즉각적인 해체 및 모든 양심수 석방 단행</span>
+                            <span class="lang-en">Invoking the constitutional rights of self-defense and resistance to fight oppression, immediately dismantling political prison camps, and releasing all prisoners of conscience</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">헌법 제3장에 의거하여 김일성 일가 및 독재 부역자들에 대한 엄정한 사법적 단죄와 과거사 청산 단행</span>
+                            <span class="lang-en">Strict judicial punishment of the Kim Il-sung family and dictatorship collaborators, and liquidation of the past pursuant to Chapter 3 of the Constitution</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">주변국과의 평화협정 체결 및 국제사회와의 정상적인 외교 관계 회복을 통해 동북아 평화 체제의 핵심 일원으로 도약</span>
+                            <span class="lang-en">Conclusion of peace treaties with neighboring countries and restoration of normal diplomatic relations to become a key member of the Northeast Asian peace regime</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">파탄난 경제를 복구하기 위해 사유 재산권 보장과 시장 경제 도입을 골자로 하는 획기적인 경제 부흥 정책 실행</span>
+                            <span class="lang-en">Implementation of groundbreaking economic revival policies focused on guaranteeing private property rights and introducing a market economy to restore the collapsed economy</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">북한과도임시정부 내각 명단 확정 및 과도 통치 기구의 안정적 출범</span>
+                            <span class="lang-en">Finalizing the Cabinet list of the PGNK and ensuring the stable launch of the transitional governance body</span>
+                        </li>
+                        <li>
+                            <span class="lang-ko">급변 사태 대비 비상 행동 계획 수립 및 질서 있는 체제 전환 주도</span>
+                            <span class="lang-en">Establishing emergency action plans for regime collapse and leading an orderly transition of the system</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -383,15 +719,20 @@
     <!-- 4. 역사적 파트너십 제안 -->
     <section id="message" class="py-24 bg-slate-900 text-white">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-5xl font-bold mb-8 serif">역사적 파트너십 제안</h2>
+            <h2 class="text-3xl md:text-5xl font-bold mb-8 serif">
+                <span class="lang-ko">역사적 파트너십 제안</span>
+                <span class="lang-en">Historic Partnership Proposal</span>
+            </h2>
             <p class="text-lg text-slate-300 mb-10 font-light leading-relaxed text-justify">
-                "우리는 단순한 후원이나 지원의 차원을 넘어, 새로운 북한의 미래를 함께 구상하고 설계하는 전략적 파트너십을 제안합니다. 전 세계적으로 존경받는 지도자와 저명한 인사들이 PGNK의 <strong>‘국제자문내각(International Advisory Council)’</strong>에 참여함으로써, 헌법 체계의 수립과 지속 가능한 정치, 경제 모델의 설계 등 중대한 역사적 과업을 완수를 위하여 함께하는 인류역사의 위대한 선구자들이 될것입니다. 이는 인류의 보편적 가치와 자유를 기반으로 한 새로운 글로벌시민국가 건설에 기여함과 동시에, 개인의 정치적·도덕적 유산(Personal Legacy)을 역사 속에 영구히 남길 수 있는 뜻깊은 기회를 제공할 것입니다."
+                <span class="lang-ko">"우리는 단순한 후원이나 지원의 차원을 넘어, 새로운 북한의 미래를 함께 구상하고 설계하는 전략적 파트너십을 제안합니다. 전 세계적으로 존경받는 지도자와 저명한 인사들이 PGNK의 <strong>‘국제자문내각(International Advisory Council)’</strong>에 참여함으로써, 헌법 체계의 수립과 지속 가능한 정치, 경제 모델의 설계 등 중대한 역사적 과업을 완수를 위하여 함께하는 인류역사의 위대한 선구자들이 될것입니다. 이는 인류의 보편적 가치와 자유를 기반으로 한 새로운 글로벌시민국가 건설에 기여함과 동시에, 개인의 정치적·도덕적 유산(Personal Legacy)을 역사 속에 영구히 남길 수 있는 뜻깊은 기회를 제공할 것입니다."</span>
+                <span class="lang-en">"We propose a strategic partnership to envision and design the future of a new North Korea together, moving beyond the level of mere sponsorship or support. By participating in the PGNK's <strong>'International Advisory Council'</strong>, globally respected leaders and renowned figures will become great pioneers in human history, joining together to complete momentous historical tasks such as establishing the constitutional framework and designing sustainable political and economic models. This offers a meaningful opportunity to contribute to building a new global citizen state based on universal human values and freedom, while leaving a personal political and moral legacy permanently in history."</span>
             </p>
             
             <div class="p-8 bg-white/5 rounded-xl border border-white/10 mt-12">
                 <blockquote class="text-center">
                     <p class="lang-ko hand-ko text-sky-200">"한 삶을 가장 가치 있게 사용하는 방법은 그것이 삶 이후에도 지속되는 무언가를 위해 쓰는 것이다.”</p>
-                    <p class="mt-4 font-bold text-slate-400">- 윌리엄 제임스</p>
+                    <p class="lang-en hand-en text-sky-200">"The great use of life is to spend it for something that will outlast it."</p>
+                    <p class="mt-4 font-bold text-slate-400">- <span class="lang-ko">윌리엄 제임스</span><span class="lang-en">William James</span></p>
                 </blockquote>
             </div>
         </div>
@@ -402,9 +743,13 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="text-3xl font-bold mb-6 serif">미래의 새 국가</h2>
+                    <h2 class="text-3xl font-bold mb-6 serif">
+                        <span class="lang-ko">미래의 새 국가</span>
+                        <span class="lang-en">Vision of the New Nation</span>
+                    </h2>
                     <p class="text-lg text-slate-600 leading-relaxed text-justify mb-8">
-                        미래의 새 국가는 인간의 존엄과 자유를 국가 권력의 근원으로 삼는 민주적 시민 국가이다. 이 국가는 공포와 강압, 혈통과 우상화에 기반한 통치를 종식시키고, 법치·책임·합의에 기초한 헌정 질서를 확립한다. 새로운 국가는 배타적 민족주의를 넘어 자유·인권·민주주의의 가치를 공유하는 전 세계 시민에게 열려 있는 글로벌 시민 국가로서, 국제법과 인권 규범을 존중하며 국제사회와 책임을 나눈다. 자유로운 시장경제, 전면적 개방, 과학기술과 혁신, 환경과 지속가능성을 국가 발전의 핵심 축으로 삼고, 과거의 반인도적 범죄를 철저히 청산함으로써 정의로운 미래로의 이행을 완성한다. 이 국가는 권력을 위한 국가가 아니라, 인간을 위한 국가이다.
+                        <span class="lang-ko">미래의 새 국가는 인간의 존엄과 자유를 국가 권력의 근원으로 삼는 민주적 시민 국가이다. 이 국가는 공포와 강압, 혈통과 우상화에 기반한 통치를 종식시키고, 법치·책임·합의에 기초한 헌정 질서를 확립한다. 새로운 국가는 배타적 민족주의를 넘어 자유·인권·민주주의의 가치를 공유하는 전 세계 시민에게 열려 있는 글로벌 시민 국가로서, 국제법과 인권 규범을 존중하며 국제사회와 책임을 나눈다. 자유로운 시장경제, 전면적 개방, 과학기술과 혁신, 환경과 지속가능성을 국가 발전의 핵심 축으로 삼고, 과거의 반인도적 범죄를 철저히 청산함으로써 정의로운 미래로의 이행을 완성한다. 이 국가는 권력을 위한 국가가 아니라, 인간을 위한 국가이다.</span>
+                        <span class="lang-en">The new nation of the future is a democratic civil state that regards human dignity and freedom as the source of state power. This nation ends rule based on fear, coercion, bloodline, and idolization, and establishes a constitutional order based on the rule of law, responsibility, and consensus. Transcending exclusive nationalism, the new nation is a global citizen state open to all citizens worldwide who share the values of freedom, human rights, and democracy, respecting international law and human rights norms while sharing responsibility with the international community. It takes a free market economy, comprehensive openness, science and technology, innovation, and environmental sustainability as the core pillars of national development, and completes the transition to a just future by thoroughly liquidating past crimes against humanity. This is not a state for power, but a state for humanity.</span>
                     </p>
                 </div>
                 <div class="relative">
@@ -415,126 +760,222 @@
         </div>
     </section>
 
-    <!-- 6. 자주 묻는 질문 (Q&A) - 수정된 내용 반영 -->
+    <!-- 6. 자주 묻는 질문 (Q&A) -->
     <section id="qna" class="py-24 bg-slate-50">
         <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-12 serif">질문과 답변 (Q&A)</h2>
+            <h2 class="text-3xl font-bold text-center text-slate-900 mb-12 serif">
+                <span class="lang-ko">질문과 답변 (Q&A)</span>
+                <span class="lang-en">Q&A</span>
+            </h2>
             <div class="space-y-4">
                 <!-- Q1 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q1')">
-                        <span class="text-lg text-slate-800">Q1. 중국과 러시아가 자국의 이익을 지키기 위해 군사적·외교적으로 개입하지 않을까요?</span>
+                        <span class="text-lg text-slate-800">
+                            <span class="lang-ko">Q1. 중국과 러시아가 자국의 이익을 지키기 위해 군사적·외교적으로 개입하지 않을까요?</span>
+                            <span class="lang-en">Q1. Won't China and Russia intervene militarily or diplomatically to protect their interests?</span>
+                        </span>
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q1"></i>
                     </button>
                     <div id="q1" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
-                        <p class="font-bold mb-2">A. "현상 유지(Status Quo)의 파괴가 아닙니다. 우리는 주변국의 안보 리스크를 영구히 제거하고, '국가 이상의 가치'를 공유하는 글로벌 경제 허브로의 전환을 제안합니다."</p>
-                        <p class="mb-4">중국과 러시아가 북한 정권의 붕괴를 경계하는 본질적인 이유는 '예측 불가능성'과 '안보 공백'에 따른 자국의 안보 위협 때문입니다. PGNK는 그들에게 구시대적 냉전의 부채를 청산하고, 국경과 민족을 초월한 <strong>'글로벌 시민 국가'</strong>가 가져올 거대한 경제적 편익(Economic Utility)을 제시합니다.</p>
-                        
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>예측 가능한 안정성(Predictable Stability)과 안보 위협의 선제적 해소:</strong> 중·러가 가장 우려하는 시나리오는 북한 내 통제 불능의 핵무기 유실과 대규모 난민 유입에 따른 국경 붕괴입니다. PGNK는 정권 교체기에 발생할 수 있는 '통제되지 않는 붕괴(Uncontrolled Collapse)'를 막고, 이를 <strong>'관리되는 전환(Managed Transition)'</strong>으로 바꿉니다. 우리는 현지에서 즉각적인 행정력을 가동하여 안보 공백을 메움으로써, 주변국이 우려하는 리스크를 선제적으로 소멸시킬 것입니다.</li>
-                            <li><strong>냉전 유산의 청산과 동북아 물류 허브(Logistics Hub) 구축:</strong> 북한은 지난 80년간 동북아의 물류와 경제 혈관을 막고 있는 '냉전의 섬'이었습니다. PGNK는 이 단절된 땅을 유럽과 아시아를 잇는 거대한 철도·해운 물류의 심장부로 개조할 것입니다. 이는 중·러의 내륙 경제가 바다와 유럽으로 직결되는 통로를 확보함을 의미하며, 물리적 국경을 넘어선 경제적 영토의 확장 기회를 제공합니다.</li>
-                            <li><strong>국가 개념을 초월한 '글로벌 시민 국가'의 경제 엔진:</strong> PGNK가 지향하는 '글로벌 시민 국가'는 영토를 독점하는 폐쇄적 국가가 아니라, 전 세계 자본과 기술이 집결하는 개방형 플랫폼입니다.
-                                <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
-                                    <li>금융 및 결제 시스템: 국제 표준에 부합하는 투명한 금융 결제 시스템을 도입하여 동북아의 새로운 금융 허브를 조성합니다.</li>
-                                    <li>인프라 및 자원 개발: 에너지, 통신, 교통망 등 대규모 인프라 건설과 방대한 광물 자원 개발권을 국제적 투명성 하에 개방합니다.</li>
-                                    <li>초국적 협력 모델: 특정 국가에 종속되지 않는 글로벌 시민 국가의 중립성을 활용하여, 중·러 기업들이 리스크 없이 투자하고 수익을 회수할 수 있는 <strong>'안전한 투자 지대(Safe Investment Zone)'</strong>를 보장합니다.</li>
-                                </ul>
-                            </li>
-                            <li><strong>지정학적 완충지대(Buffer Zone)의 진화:</strong> 우리는 구시대적인 군사적 대립의 완충지대가 아닌, 경제적 상호 의존성을 통해 평화를 강제하는 <strong>'가치 중심의 경제 완충지대'</strong>를 지향합니다. 다자주의 원칙에 따라 주변국과의 평화적 공존을 최우선으로 하여, 급격한 지정학적 지각변동에 대한 중·러의 우려를 불식시킬 것입니다.</li>
-                        </ul>
+                        <div class="lang-ko">
+                            <p class="font-bold mb-2">A. "현상 유지(Status Quo)의 파괴가 아닙니다. 우리는 주변국의 안보 리스크를 영구히 제거하고, '국가 이상의 가치'를 공유하는 글로벌 경제 허브로의 전환을 제안합니다."</p>
+                            <p class="mb-4">중국과 러시아가 북한 정권의 붕괴를 경계하는 본질적인 이유는 '예측 불가능성'과 '안보 공백'에 따른 자국의 안보 위협 때문입니다. PGNK는 그들에게 구시대적 냉전의 부채를 청산하고, 국경과 민족을 초월한 <strong>'글로벌 시민 국가'</strong>가 가져올 거대한 경제적 편익(Economic Utility)을 제시합니다.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>예측 가능한 안정성(Predictable Stability)과 안보 위협의 선제적 해소:</strong> 중·러가 가장 우려하는 시나리오는 북한 내 통제 불능의 핵무기 유실과 대규모 난민 유입에 따른 국경 붕괴입니다. PGNK는 정권 교체기에 발생할 수 있는 '통제되지 않는 붕괴(Uncontrolled Collapse)'를 막고, 이를 <strong>'관리되는 전환(Managed Transition)'</strong>으로 바꿉니다. 우리는 현지에서 즉각적인 행정력을 가동하여 안보 공백을 메움으로써, 주변국이 우려하는 리스크를 선제적으로 소멸시킬 것입니다.</li>
+                                <li><strong>냉전 유산의 청산과 동북아 물류 허브(Logistics Hub) 구축:</strong> 북한은 지난 80년간 동북아의 물류와 경제 혈관을 막고 있는 '냉전의 섬'이었습니다. PGNK는 이 단절된 땅을 유럽과 아시아를 잇는 거대한 철도·해운 물류의 심장부로 개조할 것입니다. 이는 중·러의 내륙 경제가 바다와 유럽으로 직결되는 통로를 확보함을 의미하며, 물리적 국경을 넘어선 경제적 영토의 확장 기회를 제공합니다.</li>
+                                <li><strong>국가 개념을 초월한 '글로벌 시민 국가'의 경제 엔진:</strong> PGNK가 지향하는 '글로벌 시민 국가'는 영토를 독점하는 폐쇄적 국가가 아니라, 전 세계 자본과 기술이 집결하는 개방형 플랫폼입니다.
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>금융 및 결제 시스템: 국제 표준에 부합하는 투명한 금융 결제 시스템을 도입하여 동북아의 새로운 금융 허브를 조성합니다.</li>
+                                        <li>인프라 및 자원 개발: 에너지, 통신, 교통망 등 대규모 인프라 건설과 방대한 광물 자원 개발권을 국제적 투명성 하에 개방합니다.</li>
+                                        <li>초국적 협력 모델: 특정 국가에 종속되지 않는 글로벌 시민 국가의 중립성을 활용하여, 중·러 기업들이 리스크 없이 투자하고 수익을 회수할 수 있는 <strong>'안전한 투자 지대(Safe Investment Zone)'</strong>를 보장합니다.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>지정학적 완충지대(Buffer Zone)의 진화:</strong> 우리는 구시대적인 군사적 대립의 완충지대가 아닌, 경제적 상호 의존성을 통해 평화를 강제하는 <strong>'가치 중심의 경제 완충지대'</strong>를 지향합니다. 다자주의 원칙에 따라 주변국과의 평화적 공존을 최우선으로 하여, 급격한 지정학적 지각변동에 대한 중·러의 우려를 불식시킬 것입니다.</li>
+                            </ul>
+                        </div>
+                        <div class="lang-en">
+                            <p class="font-bold mb-2">A. "This is not a disruption of the Status Quo. We propose permanently eliminating security risks for neighboring countries and transitioning into a global economic hub that shares 'values beyond the state'."</p>
+                            <p class="mb-4">The fundamental reason China and Russia are wary of the North Korean regime's collapse is the threat to their own security due to 'unpredictability' and 'security vacuum.' The PGNK offers them the liquidation of outdated Cold War debts and presents the immense Economic Utility that a <strong>'Global Citizen State'</strong> transcending borders and ethnicity will bring.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>Predictable Stability and Preemptive Resolution of Security Threats:</strong> The scenario China and Russia fear most is the uncontrollable loss of nuclear weapons within North Korea and border collapse due to a massive influx of refugees. The PGNK prevents 'Uncontrolled Collapse' during regime change and transforms it into a <strong>'Managed Transition.'</strong> By immediately activating local administrative power to fill the security vacuum, we will preemptively eliminate the risks feared by neighboring countries.</li>
+                                <li><strong>Liquidation of Cold War Legacies and Establishment of a Northeast Asian Logistics Hub:</strong> For the past 80 years, North Korea has been an 'island of the Cold War,' blocking the logistics and economic arteries of Northeast Asia. The PGNK will transform this disconnected land into the heart of a massive railway and maritime logistics network connecting Europe and Asia. This means securing a direct passage for the inland economies of China and Russia to the sea and Europe, offering an opportunity for the expansion of economic territory beyond physical borders.</li>
+                                <li><strong>Economic Engine of a 'Global Citizen State' Transcending National Concepts:</strong> The 'Global Citizen State' envisioned by the PGNK is not a closed nation monopolizing territory, but an open platform where global capital and technology converge.
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>Finance and Payment Systems: Introducing a transparent financial payment system that meets international standards to create a new financial hub in Northeast Asia.</li>
+                                        <li>Infrastructure and Resource Development: Opening up large-scale infrastructure construction such as energy, communications, and transportation networks, and development rights for vast mineral resources under international transparency.</li>
+                                        <li>Transnational Cooperation Model: Utilizing the neutrality of a Global Citizen State not subordinate to any specific country, we guarantee a <strong>'Safe Investment Zone'</strong> where Chinese and Russian companies can invest without risk and recoup profits.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Evolution of the Geopolitical Buffer Zone:</strong> We aim not for an outdated military confrontation buffer zone, but for a <strong>'Value-Centered Economic Buffer Zone'</strong> that enforces peace through economic interdependence. By prioritizing peaceful coexistence with neighboring countries based on multilateral principles, we will dispel China and Russia's concerns about sudden geopolitical tectonic shifts.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Q2 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q2')">
-                        <span class="text-lg text-slate-800">Q2. 미국과 서방 국가들이 PGNK를 지지해야 할 실질적인 이유와 보상은 무엇입니까?</span>
+                        <span class="text-lg text-slate-800">
+                            <span class="lang-ko">Q2. 미국과 서방 국가들이 PGNK를 지지해야 할 실질적인 이유와 보상은 무엇입니까?</span>
+                            <span class="lang-en">Q2. What are the practical reasons and rewards for the US and Western countries to support the PGNK?</span>
+                        </span>
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q2"></i>
                     </button>
                     <div id="q2" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
-                        <p class="font-bold mb-2">A. "미국의 안보 비용을 영구적으로 소멸시키고, 서방의 자본과 기술이 동북아를 관통하는 '초국적 경제 자산'을 확보하는 파트너십입니다."</p>
-                        <p class="mb-4">단순한 원조 요청이나 가치 공유를 넘어, 미국과 서방의 <strong>국가 이익(National Interest)</strong>을 극대화하는 확실한 실무적 보상(Rewards)을 제안합니다.</p>
-                        
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>안보 리스크의 '영구적 종식'과 비용의 획기적 전가:</strong> 수십 년간 지속된 '북핵 관리'는 미국에 막대한 안보 비용과 정치적 에너지를 소모시켰습니다. PGNK는 핵 통제권을 즉각 국제기구에 이양하고, 위협 요소를 근본적으로 제거합니다. 이는 미국이 더 이상 동북아 안보에 무한정의 자원을 쏟아부을 필요가 없음을 의미하며, 절감된 안보 비용은 즉각적인 경제적 이익으로 환산됩니다.</li>
-                            <li><strong>냉전의 마지막 빗장을 여는 '글로벌 시민 국가' 플랫폼:</strong> PGNK는 낡은 민족주의 국가 모델을 거부합니다. 우리는 서방의 자본과 기술이 아무런 장벽 없이 유입될 수 있는 <strong>'완전 개방형 국가'</strong>를 건설합니다.
-                                <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
-                                    <li>금융 및 결제 표준화: 서방 주도의 투명한 금융 결제 및 블록체인 표준을 북한 전역에 이식하여, 동북아에서 가장 안전하고 효율적인 자본 흐름의 거점을 제공합니다.</li>
-                                    <li>투자 우선권 및 법적 보호: 인프라 재건 사업에서 미국 및 서방 기업들에게 강력한 우선권을 부여하며, 글로벌 스탠다드에 부합하는 사유재산권 보호를 통해 <strong>'가장 안전한 신흥 시장(Emerging Market)'</strong>을 보장합니다.</li>
-                                </ul>
-                            </li>
-                            <li><strong>물류와 공급망의 재편: 유라시아 랜드브리지의 완성:</strong> PGNK의 성공은 단절되었던 아시아와 유럽을 잇는 육상 물류의 완성을 의미합니다. 이는 서방의 상품이 해운에만 의존하지 않고 대륙을 관통하여 빠르게 전달되는 새로운 공급망의 중심축을 제공함으로써, 서방 경제의 탄력성과 효율성을 극대화할 것입니다.</li>
-                            <li><strong>보편적 가치의 승리와 역사적 유산(Legacy):</strong> 최악의 독재 정권을 해체하고 그 자리에 인권, 자유, 법치가 작동하는 글로벌 시민 국가를 세우는 것은 서방 민주주의 진영의 역사적 승리입니다. 이는 단순한 외교적 성과를 넘어, 21세기 새로운 국제 질서의 모델로서 서방 지도자들에게 대체 불가능한 정치적 유산을 남길 것입니다.</li>
-                        </ul>
+                        <div class="lang-ko">
+                            <p class="font-bold mb-2">A. "미국의 안보 비용을 영구적으로 소멸시키고, 서방의 자본과 기술이 동북아를 관통하는 '초국적 경제 자산'을 확보하는 파트너십입니다."</p>
+                            <p class="mb-4">단순한 원조 요청이나 가치 공유를 넘어, 미국과 서방의 <strong>국가 이익(National Interest)</strong>을 극대화하는 확실한 실무적 보상(Rewards)을 제안합니다.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>안보 리스크의 '영구적 종식'과 비용의 획기적 전가:</strong> 수십 년간 지속된 '북핵 관리'는 미국에 막대한 안보 비용과 정치적 에너지를 소모시켰습니다. PGNK는 핵 통제권을 즉각 국제기구에 이양하고, 위협 요소를 근본적으로 제거합니다. 이는 미국이 더 이상 동북아 안보에 무한정의 자원을 쏟아부을 필요가 없음을 의미하며, 절감된 안보 비용은 즉각적인 경제적 이익으로 환산됩니다.</li>
+                                <li><strong>냉전의 마지막 빗장을 여는 '글로벌 시민 국가' 플랫폼:</strong> PGNK는 낡은 민족주의 국가 모델을 거부합니다. 우리는 서방의 자본과 기술이 아무런 장벽 없이 유입될 수 있는 <strong>'완전 개방형 국가'</strong>를 건설합니다.
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>금융 및 결제 표준화: 서방 주도의 투명한 금융 결제 및 블록체인 표준을 북한 전역에 이식하여, 동북아에서 가장 안전하고 효율적인 자본 흐름의 거점을 제공합니다.</li>
+                                        <li>투자 우선권 및 법적 보호: 인프라 재건 사업에서 미국 및 서방 기업들에게 강력한 우선권을 부여하며, 글로벌 스탠다드에 부합하는 사유재산권 보호를 통해 <strong>'가장 안전한 신흥 시장(Emerging Market)'</strong>을 보장합니다.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>물류와 공급망의 재편: 유라시아 랜드브리지의 완성:</strong> PGNK의 성공은 단절되었던 아시아와 유럽을 잇는 육상 물류의 완성을 의미합니다. 이는 서방의 상품이 해운에만 의존하지 않고 대륙을 관통하여 빠르게 전달되는 새로운 공급망의 중심축을 제공함으로써, 서방 경제의 탄력성과 효율성을 극대화할 것입니다.</li>
+                                <li><strong>보편적 가치의 승리와 역사적 유산(Legacy):</strong> 최악의 독재 정권을 해체하고 그 자리에 인권, 자유, 법치가 작동하는 글로벌 시민 국가를 세우는 것은 서방 민주주의 진영의 역사적 승리입니다. 이는 단순한 외교적 성과를 넘어, 21세기 새로운 국제 질서의 모델로서 서방 지도자들에게 대체 불가능한 정치적 유산을 남길 것입니다.</li>
+                            </ul>
+                        </div>
+                        <div class="lang-en">
+                            <p class="font-bold mb-2">A. "This is a partnership that permanently eliminates US security costs and secures 'transnational economic assets' where Western capital and technology penetrate Northeast Asia."</p>
+                            <p class="mb-4">Beyond simple requests for aid or shared values, we propose definitive practical Rewards that maximize the <strong>National Interest</strong> of the US and the West.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>'Permanent End' to Security Risks and Drastic Shift of Costs:</strong> Decades of 'North Korean nuclear management' have consumed enormous security costs and political energy for the US. The PGNK will immediately transfer nuclear control to international organizations and fundamentally eliminate threat elements. This means the US no longer needs to pour unlimited resources into Northeast Asian security, and the saved security costs translate into immediate economic benefits.</li>
+                                <li><strong>'Global Citizen State' Platform Opening the Last Latch of the Cold War:</strong> The PGNK rejects outdated nationalist state models. We will build a <strong>'Fully Open State'</strong> where Western capital and technology can flow in without any barriers.
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>Standardization of Finance and Payments: Transplanting Western-led transparent financial settlement and blockchain standards throughout North Korea to provide the safest and most efficient hub for capital flow in Northeast Asia.</li>
+                                        <li>Investment Priority and Legal Protection: Granting strong priority to US and Western companies in infrastructure reconstruction projects and guaranteeing the <strong>'Safest Emerging Market'</strong> through protection of private property rights meeting global standards.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Reorganization of Logistics and Supply Chains: Completion of the Eurasian Land Bridge:</strong> The success of the PGNK means the completion of land logistics connecting Asia and Europe, which had been severed. This provides a central axis for a new supply chain where Western goods are delivered quickly across the continent without relying solely on shipping, maximizing the resilience and efficiency of the Western economy.</li>
+                                <li><strong>Victory of Universal Values and Historical Legacy:</strong> Dismantling the worst dictatorship and establishing a Global Citizen State where human rights, freedom, and the rule of law operate is a historic victory for the Western democratic camp. Beyond a simple diplomatic achievement, this will leave an irreplaceable political legacy for Western leaders as a model for a new 21st-century international order.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Q3 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q3')">
-                        <span class="text-lg text-slate-800">Q3. 대한민국 정부의 주권 및 헌법적 가치와 충돌하거나 경쟁 관계가 되지는 않습니까?</span>
+                        <span class="text-lg text-slate-800">
+                            <span class="lang-ko">Q3. 대한민국 정부의 주권 및 헌법적 가치와 충돌하거나 경쟁 관계가 되지는 않습니까?</span>
+                            <span class="lang-en">Q3. Will it conflict or compete with the sovereignty and constitutional values of the Republic of Korea government?</span>
+                        </span>
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q3"></i>
                     </button>
                     <div id="q3" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
-                        <p class="font-bold mb-2">A. "PGNK는 경쟁자가 아닙니다. 대한민국 주도의 통일을 완성하기 위해 반드시 필요한 '전략적 보완재(Strategic Complement)'이자 '리스크 방파제'입니다."</p>
-                        <p class="mb-4">PGNK는 대한민국의 영토 조항(헌법 제3조)을 존중하며, 급변 사태 시 발생할 수 있는 안보 위협과 천문학적인 경제 비용을 선제적으로 차단하여 대한민국의 국익을 극대화하는 '가교(Bridge)' 역할을 수행합니다.</p>
-                        
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>행정 및 치안 리스크의 연착륙(Soft Landing) 유도:</strong>
-                                <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
-                                    <li>직접 통치의 부담 해소: 북한 급변 사태 시 대한민국 국군과 공무원이 즉각 투입될 경우, '점령군'으로 오인받아 불필요한 저항과 마찰을 빚을 수 있습니다.</li>
-                                    <li>현지화된 안정화 작전: PGNK는 현지 정서에 부합하는 치안과 행정을 전반적으로 담당합니다. 이는 대한민국 국민의 혈세 투입과 장병들의 인명 피해를 원천적으로 차단하고, 혼란을 최소화하여 대한민국 정부와 평화적인 협상을 거쳐 점진적인 통일을 준비할 것입니다.</li>
-                                </ul>
-                            </li>
-                            <li><strong>통일 비용의 혁신적 절감 및 자생적 경제 모델 구축:</strong>
-                                <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
-                                    <li>'퍼주기식' 지원이 아닌 '투자 유치' 모델: 기존 통일 시나리오는 한국 정부의 재정에 의존하는 구조였습니다. 그러나 PGNK는 북한 지역 내의 인적 자원과 지하자원을 담보로 국제 자본을 유치하여 자체적인 재건 자금을 마련합니다.</li>
-                                    <li>경제적 충격의 완충지대: 북한 지역 스스로 부가가치를 창출하는 <strong>'자생적 경제 회복 모델'</strong>을 가동함으로써, 통일 이후 한국 경제 시스템에 가해질 급격한 하중을 분산시키고 한국 납세자들의 부담을 획기적으로 줄여줄 것입니다.</li>
-                                </ul>
-                            </li>
-                            <li><strong>외교적 유연성(Diplomatic Flexibility)과 전략적 공간 확보:</strong>
-                                <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
-                                    <li>국가 차원의 부담을 덜어주는 '우회로': 주변국과의 복잡한 이해관계로 인해 대한민국 정부가 공식적으로 개입하기 어려운 민감한 사안(난민, 영토 분쟁 등)을 PGNK가 임시 정부 자격으로 선제 대응합니다.</li>
-                                    <li>외교적 부인 가능성(Plausible Deniability): PGNK의 활동은 한국 정부에게 국제법적 책임으로부터 자유로운 활동 공간을 제공합니다. 이는 한국 정부가 외교적 정당성을 유지하면서도, 실질적인 국익은 PGNK를 통해 확보할 수 있는 고도의 <strong>전략적 레버리지(Leverage)</strong>가 될 것입니다.</li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <div class="lang-ko">
+                            <p class="font-bold mb-2">A. "PGNK는 경쟁자가 아닙니다. 대한민국 주도의 통일을 완성하기 위해 반드시 필요한 '전략적 보완재(Strategic Complement)'이자 '리스크 방파제'입니다."</p>
+                            <p class="mb-4">PGNK는 대한민국의 영토 조항(헌법 제3조)을 존중하며, 급변 사태 시 발생할 수 있는 안보 위협과 천문학적인 경제 비용을 선제적으로 차단하여 대한민국의 국익을 극대화하는 '가교(Bridge)' 역할을 수행합니다.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>행정 및 치안 리스크의 연착륙(Soft Landing) 유도:</strong>
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>직접 통치의 부담 해소: 북한 급변 사태 시 대한민국 국군과 공무원이 즉각 투입될 경우, '점령군'으로 오인받아 불필요한 저항과 마찰을 빚을 수 있습니다.</li>
+                                        <li>현지화된 안정화 작전: PGNK는 현지 정서에 부합하는 치안과 행정을 전반적으로 담당합니다. 이는 대한민국 국민의 혈세 투입과 장병들의 인명 피해를 원천적으로 차단하고, 혼란을 최소화하여 대한민국 정부와 평화적인 협상을 거쳐 점진적인 통일을 준비할 것입니다.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>통일 비용의 혁신적 절감 및 자생적 경제 모델 구축:</strong>
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>'퍼주기식' 지원이 아닌 '투자 유치' 모델: 기존 통일 시나리오는 한국 정부의 재정에 의존하는 구조였습니다. 그러나 PGNK는 북한 지역 내의 인적 자원과 지하자원을 담보로 국제 자본을 유치하여 자체적인 재건 자금을 마련합니다.</li>
+                                        <li>경제적 충격의 완충지대: 북한 지역 스스로 부가가치를 창출하는 <strong>'자생적 경제 회복 모델'</strong>을 가동함으로써, 통일 이후 한국 경제 시스템에 가해질 급격한 하중을 분산시키고 한국 납세자들의 부담을 획기적으로 줄여줄 것입니다.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>외교적 유연성(Diplomatic Flexibility)과 전략적 공간 확보:</strong>
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>국가 차원의 부담을 덜어주는 '우회로': 주변국과의 복잡한 이해관계로 인해 대한민국 정부가 공식적으로 개입하기 어려운 민감한 사안(난민, 영토 분쟁 등)을 PGNK가 임시 정부 자격으로 선제 대응합니다.</li>
+                                        <li>외교적 부인 가능성(Plausible Deniability): PGNK의 활동은 한국 정부에게 국제법적 책임으로부터 자유로운 활동 공간을 제공합니다. 이는 한국 정부가 외교적 정당성을 유지하면서도, 실질적인 국익은 PGNK를 통해 확보할 수 있는 고도의 <strong>전략적 레버리지(Leverage)</strong>가 될 것입니다.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="lang-en">
+                            <p class="font-bold mb-2">A. "The PGNK is not a competitor. It is a 'Strategic Complement' and 'Risk Breakwater' essential for completing unification led by the Republic of Korea."</p>
+                            <p class="mb-4">The PGNK respects the territorial clause (Article 3) of the Republic of Korea Constitution and serves as a 'Bridge' that maximizes South Korea's national interest by preemptively blocking security threats and astronomical economic costs that could arise during a sudden change.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>Inducing Soft Landing for Administrative and Security Risks:</strong>
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>Relieving the Burden of Direct Rule: If the ROK Armed Forces and public officials are immediately deployed during a sudden change in North Korea, they may be mistaken as an 'occupying force,' causing unnecessary resistance and friction.</li>
+                                        <li>Localized Stabilization Operations: The PGNK will be responsible for security and administration that aligns with local sentiments. This fundamentally blocks the input of South Korean taxpayers' money and casualties among soldiers, minimizing chaos to prepare for gradual unification through peaceful negotiations with the ROK government.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Innovative Reduction of Unification Costs and Establishment of a Self-Sustaining Economic Model:</strong>
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>'Investment Attraction' Model, Not 'Handout' Aid: Existing unification scenarios relied on the South Korean government's finances. However, the PGNK will raise its own reconstruction funds by attracting international capital using human resources and underground resources within North Korea as collateral.</li>
+                                        <li>Buffer Zone for Economic Shock: By activating a <strong>'Self-Sustaining Economic Recovery Model'</strong> where the North Korean region creates added value on its own, it will disperse the rapid load on the South Korean economic system after unification and drastically reduce the burden on South Korean taxpayers.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Securing Diplomatic Flexibility and Strategic Space:</strong>
+                                    <ul class="list-[circle] pl-5 mt-1 space-y-1 text-xs">
+                                        <li>'Detour' Relieving National Burden: The PGNK preemptively responds as a provisional government to sensitive issues (refugees, territorial disputes, etc.) that are difficult for the ROK government to officially intervene in due to complex interests with neighboring countries.</li>
+                                        <li>Plausible Deniability: The PGNK's activities provide the South Korean government with a space for activity free from international legal responsibilities. This will be a high-level <strong>Strategic Leverage</strong> that allows the South Korean government to maintain diplomatic legitimacy while securing practical national interests through the PGNK.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Q4 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q4')">
-                        <span class="text-lg text-slate-800">Q4. 당신들은 누구입니까? 이 거대한 변화를 주도할 역량이 있습니까?</span>
+                        <span class="text-lg text-slate-800">
+                            <span class="lang-ko">Q4. 당신들은 누구입니까? 이 거대한 변화를 주도할 역량이 있습니까?</span>
+                            <span class="lang-en">Q4. Who are you? Do you have the capacity to lead this massive change?</span>
+                        </span>
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q4"></i>
                     </button>
                     <div id="q4" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
-                        <p class="font-bold mb-2">A. "우리는 국적, 인종, 민족의 경계를 초월하여 '글로벌 시민 국가' 건설의 사명을 띤 인류 최정예 전문가 그룹입니다."</p>
-                        <p class="mb-4">PGNK를 움직이는 주체는 소수의 망명객이 아닙니다. 우리는 인류 보편의 정의를 실천하기 위해 결집한, 강력하고 실질적인 <strong>통치 역량(Governance Capacity)</strong>을 갖춘 세력입니다.</p>
-                        
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>초국가적 테크노크라트(Technocrat) 결합체:</strong> 우리는 탈북민들을 주축으로, 전 세계의 정치, 경제, 외교, 군사 전문가들이 결합한 조직입니다. 특정 국가의 이익에 매몰되지 않고, 북한이라는 폐쇄된 공간에 인류 보편의 가치를 이식하기 위해 국적과 인종을 초월하여 결성된 <strong>'실전형 통치 그룹'</strong>입니다.</li>
-                            <li><strong>새로운 문명의 설계자(Architects):</strong> 우리는 단순히 과거를 복원하는 것이 아니라, 민족주의적 환상에서 벗어나 법치와 자유, 첨단 기술이 결합된 <strong>'글로벌 시민 국가'</strong>의 표준 모델을 북한 땅에 세우고자 합니다. 우리의 전문성은 이미 완성된 헌법(PGNK 헌장)과 정교한 국가 재건 로드맵을 통해 증명되었습니다.</li>
-                            <li><strong>불굴의 실행 의지(Will to Execute):</strong> 우리는 인류사에서 폭정이 무너지는 모든 과정을 분석하고 학습했습니다. 우리는 단순한 조언자가 아니라, 실제 현장에서 변화를 주도하고 그 결과에 책임을 지는 지도자 그룹입니다. 우리의 존재 자체가 이미 북한 체제의 모순을 무너뜨리는 가장 강력한 대안 세력의 등장입니다.</li>
-                        </ul>
+                        <div class="lang-ko">
+                            <p class="font-bold mb-2">A. "우리는 국적, 인종, 민족의 경계를 초월하여 '글로벌 시민 국가' 건설의 사명을 띤 인류 최정예 전문가 그룹입니다."</p>
+                            <p class="mb-4">PGNK를 움직이는 주체는 소수의 망명객이 아닙니다. 우리는 인류 보편의 정의를 실천하기 위해 결집한, 강력하고 실질적인 <strong>통치 역량(Governance Capacity)</strong>을 갖춘 세력입니다.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>초국가적 테크노크라트(Technocrat) 결합체:</strong> 우리는 탈북민들을 주축으로, 전 세계의 정치, 경제, 외교, 군사 전문가들이 결합한 조직입니다. 특정 국가의 이익에 매몰되지 않고, 북한이라는 폐쇄된 공간에 인류 보편의 가치를 이식하기 위해 국적과 인종을 초월하여 결성된 <strong>'실전형 통치 그룹'</strong>입니다.</li>
+                                <li><strong>새로운 문명의 설계자(Architects):</strong> 우리는 단순히 과거를 복원하는 것이 아니라, 민족주의적 환상에서 벗어나 법치와 자유, 첨단 기술이 결합된 <strong>'글로벌 시민 국가'</strong>의 표준 모델을 북한 땅에 세우고자 합니다. 우리의 전문성은 이미 완성된 헌법(PGNK 헌장)과 정교한 국가 재건 로드맵을 통해 증명되었습니다.</li>
+                                <li><strong>불굴의 실행 의지(Will to Execute):</strong> 우리는 인류사에서 폭정이 무너지는 모든 과정을 분석하고 학습했습니다. 우리는 단순한 조언자가 아니라, 실제 현장에서 변화를 주도하고 그 결과에 책임을 지는 지도자 그룹입니다. 우리의 존재 자체가 이미 북한 체제의 모순을 무너뜨리는 가장 강력한 대안 세력의 등장입니다.</li>
+                            </ul>
+                        </div>
+                        <div class="lang-en">
+                            <p class="font-bold mb-2">A. "We are an elite group of global experts transcending the boundaries of nationality, race, and ethnicity, with the mission of building a 'Global Citizen State'."</p>
+                            <p class="mb-4">The entities moving the PGNK are not a few exiles. We are a force equipped with powerful and practical <strong>Governance Capacity</strong> gathered to practice universal human justice.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>Transnational Technocrat Coalition:</strong> We are an organization where political, economic, diplomatic, and military experts from around the world have combined, centered on North Korean defectors. We are a <strong>'Practical Governance Group'</strong> formed transcending nationality and race to transplant universal human values into the closed space of North Korea, without being buried in the interests of specific countries.</li>
+                                <li><strong>Architects of a New Civilization:</strong> We do not simply want to restore the past, but to establish a standard model of a <strong>'Global Citizen State'</strong> where the rule of law, freedom, and advanced technology are combined, breaking away from nationalist fantasies. Our expertise has already been proven through the completed Constitution (PGNK Charter) and the sophisticated roadmap for national reconstruction.</li>
+                                <li><strong>Indomitable Will to Execute:</strong> We have analyzed and learned from every process in human history where tyranny has collapsed. We are not mere advisors, but a group of leaders who drive change in the actual field and take responsibility for the results. Our very existence is the emergence of the most powerful alternative force that breaks down the contradictions of the North Korean system.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Q5 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q5')">
-                        <span class="text-lg text-slate-800">Q5. PGNK 모델이 실제로 성공하여 국가를 건설할 수 있다는 근거는 무엇입니까?</span>
+                        <span class="text-lg text-slate-800">
+                            <span class="lang-ko">Q5. PGNK 모델이 실제로 성공하여 국가를 건설할 수 있다는 근거는 무엇입니까?</span>
+                            <span class="lang-en">Q5. What is the basis for the PGNK model actually succeeding in building a nation?</span>
+                        </span>
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q5"></i>
                     </button>
                     <div id="q5" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
-                        <p class="font-bold mb-2">A. "우리의 전략은 막연한 '희망'이나 '저항'이 아닙니다. 실제 국가 시스템을 가동할 수 있는 '검증된 설계도'와 '실행 체계'를 완비했습니다."</p>
-                        <p class="mb-4">과거의 실패한 시도들과 달리, PGNK는 국가 건설을 위한 세 가지 핵심 기둥(Pillars)을 이미 완성하고 가동 대기 중입니다.</p>
-                        
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>통치 정당성과 완비된 거버넌스 시스템:</strong> 우리는 이미 국제 표준에 부합하는 <strong>헌법(PGNK 헌장)</strong>을 제정했으며, 행정·입법·사법의 3권 분립을 바탕으로 한 실질적 운영 체계를 구축했습니다. 특히 <strong>'국가무력건설부'</strong>를 통해 군사적 지휘권과 치안 유지 능력을 제도화했습니다. 이는 PGNK가 정권 공백기(Power Vacuum) 발생 시 즉각 투입되어 행정 서비스를 재개할 수 있는 <strong>'준비된 정부(Ready-to-Govern)'</strong>임을 의미합니다.</li>
-                            <li><strong>실행 가능한 군사·안보 로드맵:</strong> 우리는 이론에 그치지 않고 행동하는 양심의 전략을 보유하고 있습니다. 소규모 특수 작전으로부터 전 인민적인 봉기를 주도하고 이를 바탕으로 <strong>'인도적 지원 통로(Humanitarian Corridor)'</strong>를 개설하여 내부 민심을 흡수하는 단계적 확장 전략을 실행합니다. 이는 국제사회의 전면적 전쟁 개입 없이도 내부로부터의 붕괴와 재건을 동시에 유도할 수 있는 유일한 '성과 기반(Performance-based)' 모델입니다.</li>
-                            <li><strong>내부 동력과 글로벌 시민 국가의 결합:</strong> 북한 내부의 MZ세대와 장마당 세력은 이미 체제의 모순을 자각하고 있습니다. PGNK는 이들에게 구시대적인 민족주의가 아닌, <strong>'글로벌 시민 국가'</strong>라는 강력한 미래 비전을 제시합니다. 이 비전은 내부 주민들에게는 '삶의 희망'을, 국제사회에는 '불확실성의 해소'를 제공합니다. 주민들의 자발적 협력과 국제 사회의 자본·기술이 결합된 우리의 모델은, 역사상 가장 빠르고 안정적인 체제 전환(Regime Transition) 사례가 될 것입니다.</li>
-                        </ul>
+                        <div class="lang-ko">
+                            <p class="font-bold mb-2">A. "우리의 전략은 막연한 '희망'이나 '저항'이 아닙니다. 실제 국가 시스템을 가동할 수 있는 '검증된 설계도'와 '실행 체계'를 완비했습니다."</p>
+                            <p class="mb-4">과거의 실패한 시도들과 달리, PGNK는 국가 건설을 위한 세 가지 핵심 기둥(Pillars)을 이미 완성하고 가동 대기 중입니다.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>통치 정당성과 완비된 거버넌스 시스템:</strong> 우리는 이미 국제 표준에 부합하는 <strong>헌법(PGNK 헌장)</strong>을 제정했으며, 행정·입법·사법의 3권 분립을 바탕으로 한 실질적 운영 체계를 구축했습니다. 특히 <strong>'국가무력건설부'</strong>를 통해 군사적 지휘권과 치안 유지 능력을 제도화했습니다. 이는 PGNK가 정권 공백기(Power Vacuum) 발생 시 즉각 투입되어 행정 서비스를 재개할 수 있는 <strong>'준비된 정부(Ready-to-Govern)'</strong>임을 의미합니다.</li>
+                                <li><strong>실행 가능한 군사·안보 로드맵:</strong> 우리는 이론에 그치지 않고 행동하는 양심의 전략을 보유하고 있습니다. 소규모 특수 작전으로부터 전 인민적인 봉기를 주도하고 이를 바탕으로 <strong>'인도적 지원 통로(Humanitarian Corridor)'</strong>를 개설하여 내부 민심을 흡수하는 단계적 확장 전략을 실행합니다. 이는 국제사회의 전면적 전쟁 개입 없이도 내부로부터의 붕괴와 재건을 동시에 유도할 수 있는 유일한 '성과 기반(Performance-based)' 모델입니다.</li>
+                                <li><strong>내부 동력과 글로벌 시민 국가의 결합:</strong> 북한 내부의 MZ세대와 장마당 세력은 이미 체제의 모순을 자각하고 있습니다. PGNK는 이들에게 구시대적인 민족주의가 아닌, <strong>'글로벌 시민 국가'</strong>라는 강력한 미래 비전을 제시합니다. 이 비전은 내부 주민들에게는 '삶의 희망'을, 국제사회에는 '불확실성의 해소'를 제공합니다. 주민들의 자발적 협력과 국제 사회의 자본·기술이 결합된 우리의 모델은, 역사상 가장 빠르고 안정적인 체제 전환(Regime Transition) 사례가 될 것입니다.</li>
+                            </ul>
+                        </div>
+                        <div class="lang-en">
+                            <p class="font-bold mb-2">A. "Our strategy is not vague 'hope' or 'resistance.' We have completed a 'proven blueprint' and 'execution system' capable of operating an actual state system."</p>
+                            <p class="mb-4">Unlike failed attempts in the past, the PGNK has already completed and is ready to operate the three key pillars for nation-building.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>Governance Legitimacy and Complete System:</strong> We have already enacted a <strong>Constitution (PGNK Charter)</strong> that meets international standards and built a practical operating system based on the separation of powers. In particular, we have institutionalized military command and public security maintenance capabilities through the <strong>'Ministry of National Defense (FJA)'</strong>. This means the PGNK is a <strong>'Ready-to-Govern'</strong> entity that can be immediately deployed to resume administrative services in the event of a power vacuum.</li>
+                                <li><strong>Actionable Military and Security Roadmap:</strong> We possess a strategy of acting conscience that does not stop at theory. We execute a phased expansion strategy that leads a pan-national uprising from small-scale special operations and opens a <strong>'Humanitarian Corridor'</strong> based on this to absorb internal public sentiment. This is the only 'Performance-based' model that can simultaneously induce internal collapse and reconstruction without full-scale war intervention by the international community.</li>
+                                <li><strong>Combination of Internal Dynamics and Global Citizen State:</strong> The MZ generation and Jangmadang forces inside North Korea are already aware of the contradictions of the regime. The PGNK presents them with a powerful future vision of a <strong>'Global Citizen State'</strong>, not outdated nationalism. This vision provides 'hope for life' to internal residents and 'resolution of uncertainty' to the international community. Our model, combining the voluntary cooperation of residents with the capital and technology of the international community, will be the fastest and most stable case of Regime Transition in history.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -551,15 +992,104 @@
         </div>
     </footer>
 
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity modal-overlay" aria-hidden="true" onclick="closeModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full modal-content">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-slate-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <i data-lucide="mail" class="h-6 w-6 text-slate-600"></i>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                <span class="lang-ko">연락 및 참여하기</span>
+                                <span class="lang-en">Contact & Join Us</span>
+                            </h3>
+                            <div class="mt-4">
+                                <form class="space-y-4">
+                                    <div>
+                                        <label for="contact-name" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">이름 / 단체명</span>
+                                            <span class="lang-en">Name / Organization</span>
+                                        </label>
+                                        <input type="text" name="name" id="contact-name" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-phone" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">연락처</span>
+                                            <span class="lang-en">Phone Number</span>
+                                        </label>
+                                        <input type="tel" name="phone" id="contact-phone" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-email" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">이메일</span>
+                                            <span class="lang-en">Email</span>
+                                        </label>
+                                        <input type="email" name="email" id="contact-email" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-address" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">주소</span>
+                                            <span class="lang-en">Address</span>
+                                        </label>
+                                        <input type="text" name="address" id="contact-address" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="contact-message" class="block text-sm font-medium text-gray-700">
+                                            <span class="lang-ko">메시지</span>
+                                            <span class="lang-en">Message</span>
+                                        </label>
+                                        <textarea id="contact-message" name="message" rows="3" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        <span class="lang-ko">보내기</span>
+                        <span class="lang-en">Send</span>
+                    </button>
+                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        <span class="lang-ko">취소</span>
+                        <span class="lang-en">Cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentLang = 'ko';
         function toggleLanguage() {
             currentLang = currentLang === 'ko' ? 'en' : 'ko';
             document.body.className = `bg-slate-50 text-slate-800 lang-${currentLang}`;
         }
+        
+        // Modal Logic
+        function openModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.remove('hidden');
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.add('hidden');
+            // Enable body scroll
+            document.body.style.overflow = 'auto';
+        }
+
         document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
             document.getElementById('mobile-menu')?.classList.toggle('hidden');
         });
+        
         function toggleAccordion(id) {
             const el = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
