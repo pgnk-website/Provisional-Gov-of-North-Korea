@@ -43,7 +43,7 @@
         .chapter-title { color: #075985; font-weight: 800; border-left: 5px solid #075985; padding-left: 1.25rem; background-color: #f0f9ff; padding-top: 0.75rem; padding-bottom: 0.75rem; margin-top: 3.5rem; margin-bottom: 2rem; font-size: 1.4rem; letter-spacing: -0.025em; }
         
         .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        
+
         /* Modal Styles */
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.5);
@@ -72,21 +72,11 @@
                 
                 <!-- 데스크탑 메뉴 -->
                 <div class="hidden xl:flex space-x-6 items-center text-sm font-medium">
-                    <a href="#constitution" class="text-slate-600 hover:text-sky-700 transition">
-                        <span class="lang-ko">헌법</span><span class="lang-en">Constitution</span>
-                    </a>
-                    <a href="#organization" class="text-slate-600 hover:text-sky-700 transition">
-                        <span class="lang-ko">내각/인사</span><span class="lang-en">Cabinet/Talent</span>
-                    </a>
-                    <a href="#roadmap" class="text-slate-600 hover:text-sky-700 transition">
-                        <span class="lang-ko">로드맵</span><span class="lang-en">Roadmap</span>
-                    </a>
-                    <a href="#message" class="text-slate-600 hover:text-sky-700 transition">
-                        <span class="lang-ko">파트너십</span><span class="lang-en">Partnership</span>
-                    </a>
-                    <a href="#vision" class="text-slate-600 hover:text-sky-700 transition">
-                        <span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span>
-                    </a>
+                    <a href="#constitution" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">헌법</span><span class="lang-en">Constitution</span></a>
+                    <a href="#organization" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">내각/인사</span><span class="lang-en">Cabinet/Talent</span></a>
+                    <a href="#roadmap" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">로드맵</span><span class="lang-en">Roadmap</span></a>
+                    <a href="#message" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">파트너십</span><span class="lang-en">Partnership</span></a>
+                    <a href="#vision" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span></a>
                     <a href="#qna" class="text-slate-600 hover:text-sky-700 transition">
                         <span class="lang-ko">질문답변</span><span class="lang-en">Q&A</span>
                     </a>
@@ -109,17 +99,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 모바일 메뉴 -->
-        <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-slate-200">
-            <div class="px-4 pt-2 pb-6 space-y-1">
-                <a href="#constitution" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">헌법</span><span class="lang-en">Constitution</span></a>
-                <a href="#organization" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">조직 및 인재</span><span class="lang-en">Organization</span></a>
-                <a href="#roadmap" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">과제와 의무</span><span class="lang-en">Tasks & Duties</span></a>
-                <a href="#message" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">세계 메시지</span><span class="lang-en">Global Message</span></a>
-                <a href="#vision" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span></a>
-            </div>
-        </div>
     </nav>
 
     <!-- Contact Modal -->
@@ -139,13 +118,17 @@
                                 <span class="lang-en">Contact & Join Us</span>
                             </h3>
                             <div class="mt-4">
-                                <form class="space-y-4">
+                                <!-- Formspree 연동을 위한 form 태그입니다. -->
+                                <!-- YOUR_FORM_ID 부분을 Formspree에서 발급받은 ID로 교체하세요 (예: xkqnqzvb) -->
+                                <form action="https://formspree.io/f/mzdeddlo" method="POST" class="space-y-4">
+                                    <input type="hidden" name="_subject" value="New Contact from PGNK Website">
+                                    
                                     <div>
                                         <label for="contact-name" class="block text-sm font-medium text-gray-700">
                                             <span class="lang-ko">이름 / 단체명</span>
                                             <span class="lang-en">Name / Organization</span>
                                         </label>
-                                        <input type="text" name="name" id="contact-name" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                        <input type="text" name="name" id="contact-name" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
                                     </div>
                                     <div>
                                         <label for="contact-phone" class="block text-sm font-medium text-gray-700">
@@ -159,7 +142,7 @@
                                             <span class="lang-ko">이메일</span>
                                             <span class="lang-en">Email</span>
                                         </label>
-                                        <input type="email" name="email" id="contact-email" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                        <input type="email" name="email" id="contact-email" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
                                     </div>
                                     <div>
                                         <label for="contact-address" class="block text-sm font-medium text-gray-700">
@@ -173,22 +156,22 @@
                                             <span class="lang-ko">메시지</span>
                                             <span class="lang-en">Message</span>
                                         </label>
-                                        <textarea id="contact-message" name="message" rows="3" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
+                                        <textarea id="contact-message" name="message" rows="3" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
+                                    </div>
+                                    <div class="bg-gray-50 pt-3 sm:flex sm:flex-row-reverse">
+                                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                            <span class="lang-ko">보내기</span>
+                                            <span class="lang-en">Send</span>
+                                        </button>
+                                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                                            <span class="lang-ko">취소</span>
+                                            <span class="lang-en">Cancel</span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                        <span class="lang-ko">보내기</span>
-                        <span class="lang-en">Send</span>
-                    </button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                        <span class="lang-ko">취소</span>
-                        <span class="lang-en">Cancel</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -242,9 +225,7 @@
                 
                 <!-- 전문 (Preamble) -->
                 <div class="mb-16 border-b-2 border-slate-200 pb-16">
-                    <h3 class="text-3xl font-bold text-center mb-10 serif text-slate-900 uppercase tracking-widest">
-                        <span class="lang-ko">전 문 (Preamble)</span><span class="lang-en">Preamble</span>
-                    </h3>
+                    <h3 class="text-3xl font-bold text-center mb-10 serif text-slate-900 uppercase tracking-widest">전 문 (Preamble)</h3>
                     <div class="text-lg leading-loose text-slate-700 font-medium serif text-justify space-y-8">
                         <div class="lang-ko">
                             <p>우리는 인간이 태어날 때부터 자유롭고 존엄하다는 보편적 진리를 다시 선언한다. 그 어떤 국가, 이념, 권력도 인간의 존엄 위에 존재할 수 없으며, 공포와 강압, 거짓과 고립은 결코 정당한 통치의 근거가 될 수 없다.</p>
@@ -433,7 +414,7 @@
                         <span class="lang-ko">제5장 무장력 창설: 자유조선군 (FJA)</span><span class="lang-en">Chapter 5: Creation of Armed Forces of the Provisional Government: Free Joseon Army (FJA)</span>
                     </h4>
                     <div class="article-content space-y-4">
-                        <p><strong class="lang-ko">제26조 (자유조선군의 지위)</strong> <span class="lang-ko">자유조선군은 국가 폭력으로부터 시민의 생명과 자유를 즉각적으로 구원하는 행동하는 양심의 수단이다.</span> <strong class="lang-en">Article 26 (Status of the Free Joseon Army)</strong> <span class="lang-en">The Free Joseon Army (FJA) is not a passive reserve force waiting and preparing for the future, but the last hope and a means of acting conscience to immediately save the lives and freedom of citizens deprived by existing state violence.</span></p>
+                        <p><strong class="lang-ko">제26조 (지위)</strong> <span class="lang-ko">자유조선군은 국가 폭력으로부터 시민의 생명과 자유를 즉각적으로 구원하는 행동하는 양심의 수단이다.</span> <strong class="lang-en">Article 26 (Status of the Free Joseon Army)</strong> <span class="lang-en">The Free Joseon Army (FJA) is not a passive reserve force waiting and preparing for the future, but the last hope and a means of acting conscience to immediately save the lives and freedom of citizens deprived by existing state violence.</span></p>
                         <p><strong class="lang-ko">제27조 (설립 근거와 정당성)</strong> <span class="lang-ko">무력 행사는 자위권(Self-Defense)과 보호책임(R2P) 원칙에 근거한 합법적 수단이다.</span> <strong class="lang-en">Article 27 (Basis of Establishment and Legitimacy)</strong> <span class="lang-en">The use of force by the Free Joseon Army is a legal and justifiable means based on the right of self-defense and the principle of Responsibility to Protect (R2P) to protect the people from the dictatorship's organized slaughter and human rights abuses.</span></p>
                         <p><strong class="lang-ko">제28조 (최우선 임무)</strong> <span class="lang-ko">시민 봉기의 지원, 정치범수용소 타격 및 수감자 구출, 국가 폭력으로부터의 시민 보호를 최우선으로 한다.</span> <strong class="lang-en">Article 28 (Primary Mission)</strong> <span class="lang-en">The primary mission of the Free Joseon Army is to stand at the vanguard of citizens' uprisings against the dictatorship, strike political prison camps and detention facilities to rescue prisoners, and protect the lives of citizens at scenes of state violence such as public executions.</span></p>
                         <p><strong class="lang-ko">제29조 (국제법 준수)</strong> <span class="lang-ko">제네바 협약 등 국제인도법을 엄격히 준수하며, 민간인 공격을 절대 금지하고 투항자를 인도적으로 대우한다.</span> <strong class="lang-en">Article 29 (Observance of International Law)</strong> <span class="lang-en">The Free Joseon Army strictly observes international humanitarian law, including the Geneva Conventions. Attacks on civilians are prohibited, and even enemy combatants who surrender or are incapacitated (hors de combat) are treated humanely.</span></p>
@@ -1009,13 +990,17 @@
                                 <span class="lang-en">Contact & Join Us</span>
                             </h3>
                             <div class="mt-4">
-                                <form class="space-y-4">
+                                <!-- Formspree Form Action -->
+                                <!-- IMPORTANT: Replace 'https://formspree.io/f/YOUR_FORM_ID' with your actual Formspree endpoint -->
+                                <form action="https://formspree.io/f/mrgvnzll" method="POST" class="space-y-4">
+                                    <input type="hidden" name="_subject" value="New Contact from PGNK Website">
+                                    <input type="hidden" name="_cc" value="admin@pgnk.org">
                                     <div>
                                         <label for="contact-name" class="block text-sm font-medium text-gray-700">
                                             <span class="lang-ko">이름 / 단체명</span>
                                             <span class="lang-en">Name / Organization</span>
                                         </label>
-                                        <input type="text" name="name" id="contact-name" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                        <input type="text" name="name" id="contact-name" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
                                     </div>
                                     <div>
                                         <label for="contact-phone" class="block text-sm font-medium text-gray-700">
@@ -1029,7 +1014,7 @@
                                             <span class="lang-ko">이메일</span>
                                             <span class="lang-en">Email</span>
                                         </label>
-                                        <input type="email" name="email" id="contact-email" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                        <input type="email" name="email" id="contact-email" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
                                     </div>
                                     <div>
                                         <label for="contact-address" class="block text-sm font-medium text-gray-700">
@@ -1043,22 +1028,22 @@
                                             <span class="lang-ko">메시지</span>
                                             <span class="lang-en">Message</span>
                                         </label>
-                                        <textarea id="contact-message" name="message" rows="3" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
+                                        <textarea id="contact-message" name="message" rows="3" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
+                                    </div>
+                                    <div class="bg-gray-50 pt-3 sm:flex sm:flex-row-reverse">
+                                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                            <span class="lang-ko">보내기</span>
+                                            <span class="lang-en">Send</span>
+                                        </button>
+                                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                                            <span class="lang-ko">취소</span>
+                                            <span class="lang-en">Cancel</span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                        <span class="lang-ko">보내기</span>
-                        <span class="lang-en">Send</span>
-                    </button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                        <span class="lang-ko">취소</span>
-                        <span class="lang-en">Cancel</span>
-                    </button>
                 </div>
             </div>
         </div>
