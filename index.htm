@@ -93,7 +93,8 @@
                         <span class="lang-ko">EN 보기</span><span class="lang-en">View KR</span>
                     </button>
                     
-                    <button onclick="openModal()" class="px-3 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-[10px] md:text-xs">
+                    <!-- 모바일 최적화: 텍스트 줄바꿈 방지 및 크기 조정 -->
+                    <button onclick="openModal()" class="px-2 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-[10px] md:text-xs whitespace-nowrap">
                         <span class="lang-ko">연락 및 참여하기</span><span class="lang-en">Contact & Join Us</span>
                     </button>
 
@@ -133,6 +134,8 @@
                                 <span class="lang-en">Contact & Join Us</span>
                             </h3>
                             <div class="mt-4">
+                                <!-- Formspree Form Action -->
+                                <!-- IMPORTANT: Replace 'https://formspree.io/f/YOUR_FORM_ID' with your actual Formspree endpoint -->
                                 <form action="https://formspree.io/f/mrgvnzll" method="POST" class="space-y-4">
                                     <input type="hidden" name="_subject" value="New Contact from PGNK Website">
                                     <input type="hidden" name="_cc" value="admin@pgnk.org">
@@ -1002,8 +1005,6 @@
                                 <span class="lang-en">Contact & Join Us</span>
                             </h3>
                             <div class="mt-4">
-                                <!-- Formspree Form Action -->
-                                <!-- IMPORTANT: Replace 'https://formspree.io/f/YOUR_FORM_ID' with your actual Formspree endpoint -->
                                 <form action="https://formspree.io/f/mrgvnzll" method="POST" class="space-y-4">
                                     <input type="hidden" name="_subject" value="New Contact from PGNK Website">
                                     <input type="hidden" name="_cc" value="admin@pgnk.org">
