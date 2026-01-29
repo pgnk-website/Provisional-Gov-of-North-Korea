@@ -59,6 +59,11 @@
     <!-- 배경 음악: 자동 재생 설정 -->
     <!-- 브라우저 정책상 자동 재생이 차단될 수 있으므로, 하단 스크립트에서 클릭 시 재생 로직을 추가했습니다. -->
     <audio id="bg-music" src="자유의 여명 (2).mp3" loop autoplay></audio>
+    <script>
+  window.addEventListener('click', () => {
+    document.getElementById('bg-music').play();
+  });
+</script>
 
     <!-- 내비게이션 -->
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
