@@ -6,7 +6,6 @@
     
     <title>북한과도임시정부 (PGNK)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Noto Sans/Serif KR, Playfair Display + 필기체 폰트 추가 (Nanum Pen Script, Dancing Script) -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@400;700&family=Nanum+Pen+Script&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -57,15 +56,11 @@
 </head>
 <body class="bg-slate-50 text-slate-800 lang-ko">
 
-    <!-- 배경 음악: 자동 재생 설정 -->
-    <!-- 브라우저 정책상 자동 재생이 차단될 수 있으므로, 하단 스크립트에서 클릭 시 재생 로직을 추가했습니다. -->
     <audio id="bg-music" src="자유의 여명 (2).mp3" loop autoplay muted></audio>
-   
-    <!-- 내비게이션 -->
+    
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- 로고 -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
                     <img src="official-logo.png" class="w-12 h-12 rounded-full mr-3 shadow-lg object-cover border border-slate-200" alt="북한과도임시정부 로고">
                     <div class="flex flex-col">
@@ -75,7 +70,6 @@
                     </div>
                 </div>
                 
-                <!-- 데스크탑 메뉴 -->
                 <div class="hidden xl:flex space-x-6 items-center text-sm font-medium">
                     <a href="#constitution" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">헌법</span><span class="lang-en">Constitution</span></a>
                     <a href="#organization" class="text-slate-600 hover:text-sky-700 transition"><span class="lang-ko">내각/인사</span><span class="lang-en">Cabinet/Talent</span></a>
@@ -88,15 +82,13 @@
                 </div>
 
                 
-                <!-- 우측 컨트롤 -->
                 <div class="flex items-center space-x-2 md:space-x-4">
-                    <!-- 언어 스위칭 버튼 -->
                     <button onclick="toggleLanguage()" class="px-3 py-1.5 rounded-full border border-slate-300 text-[10px] md:text-xs font-bold text-slate-700 hover:bg-slate-100 transition flex items-center">
                         <i data-lucide="globe" class="w-3 h-3 mr-1"></i>
                         <span class="lang-ko">EN 보기</span><span class="lang-en">View KR</span>
                     </button>
                     
-                    <button onclick="openModal()" class="px-3 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-[10px] md:text-xs">
+                    <button onclick="openModal()" class="hidden md:inline-flex items-center px-3 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-[10px] md:text-xs">
                         <span class="lang-ko">연락 및 참여하기</span><span class="lang-en">Contact & Join Us</span>
                     </button>
 
@@ -107,7 +99,6 @@
             </div>
         </div>
 
-        <!-- 모바일 메뉴 -->
         <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-slate-200">
             <div class="px-4 pt-2 pb-6 space-y-1">
                 <a href="#constitution" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">헌법</span><span class="lang-en">Constitution</span></a>
@@ -115,11 +106,16 @@
                 <a href="#roadmap" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">과제와 의무</span><span class="lang-en">Tasks & Duties</span></a>
                 <a href="#message" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">세계 메시지</span><span class="lang-en">Global Message</span></a>
                 <a href="#vision" class="block px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md"><span class="lang-ko">미래 비전</span><span class="lang-en">Future Vision</span></a>
+                
+                <div class="pt-4 mt-2 border-t border-slate-100">
+                    <button onclick="openModal()" class="w-full flex items-center justify-center px-4 py-3 bg-slate-900 text-white rounded-md font-bold hover:bg-slate-800 transition shadow-md text-sm">
+                        <span class="lang-ko">연락 및 참여하기</span><span class="lang-en">Contact & Join Us</span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
     
-    <!-- Contact Modal -->
     <div id="contactModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity modal-overlay" aria-hidden="true" onclick="closeModal()"></div>
@@ -136,7 +132,6 @@
                                 <span class="lang-en">Contact & Join Us</span>
                             </h3>
                             <div class="mt-4">
-                                <!-- Formspree Form Action -->
                                 <form action="https://formspree.io/f/mrgvnzll" method="POST" class="space-y-4">
                                     <input type="hidden" name="_subject" value="New Contact from PGNK Website">
                                     <input type="hidden" name="_cc" value="admin@pgnk.org">
@@ -194,7 +189,6 @@
         </div>
     </div>
 
-    <!-- 히어로 섹션 -->
     <header class="relative pt-32 pb-24 lg:pt-48 lg:pb-40 bg-slate-900 overflow-hidden hero-pattern">
         <div class="absolute inset-0 z-0">
             <img src="free joseon4.jpg" alt="Background" class="w-full h-full object-cover opacity-20 grayscale mix-blend-overlay">
@@ -223,7 +217,6 @@
         </div>
     </header>
 
-    <!-- 1. 헌법 섹션 (Constitution) -->
     <section id="constitution" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -240,7 +233,6 @@
 
             <div class="constitution-doc rounded-2xl p-8 md:p-16 max-h-[1200px] overflow-y-auto custom-scrollbar">
                 
-                <!-- 전문 (Preamble) -->
                 <div class="mb-16 border-b-2 border-slate-200 pb-16">
                     <h3 class="text-3xl font-bold text-center mb-10 serif text-slate-900 uppercase tracking-widest">전 문 (Preamble)</h3>
                     <div class="text-lg leading-loose text-slate-700 font-medium serif text-justify space-y-8">
@@ -275,7 +267,6 @@
                     </div>
                 </div>
 
-                <!-- 상세 조항 -->
                 <div class="space-y-4">
                     <h4 class="chapter-title">
                         <span class="lang-ko">제1장 총강</span><span class="lang-en">Chapter 1: General Provisions</span>
@@ -285,6 +276,7 @@
                             <span class="lang-ko">제1조 (북한과도임시정부 수립의 필연성과 정당성)</span>
                             <span class="lang-en">Article 1 (Inevitability and Legitimacy of the Establishment of the Provisional Government)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">① (보호책임의 방기와 주권의 박탈) 국가는 국민의 생명과 자유를 보호할 때만 주권을 행사할 정당성을 가진다. 그러나 현존하는 북한의 국가 시스템은 자국민을 보호하기는커녕 국가 권력을 동원하여 조직적으로 생명을 박탈하고 자유를 억압하는 가해자가 되었다. 이에 국제법상 '보호책임(Responsibility to Protect, R2P)' 원칙에 따라 기존 정권의 주권은 효력을 상실하였으며, 주민을 보호할 새로운 주체로서 북한과도임시정부의 수립은 선택이 아닌 법적·도덕적 필연이다.<br>
                             ② (저항권과 자위권의 발동) 현 정권은 상식과 이성을 거부하고 폭력으로 통치하는 범죄 집단으로 전락하였다. 이에 북한 주민과 임시정부는 압제로부터 생존하기 위해 천부적인 자위권(Self-Defense)과 저항권을 발동하며, 이는 국제 인권 선언과 문명사회의 규범에 부합하는 합법적인 권리 행사이다.<br>
@@ -301,6 +293,7 @@
                             <span class="lang-ko">제2조 (현 정권의 정당성 상실에 대한 근거)</span>
                             <span class="lang-en">Article 2 (Grounds for the Loss of Legitimacy of the Current Regime)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">북한과도임시정부는 다음 각 호의 사유로 현 북한 정권이 '실패한 국가'를 넘어 통치 자격을 영구히 상실했음을 선언한다.<br>
                             1. 반인도적 범죄의 국가 정책화: 살인, 고문, 강간 등 반인도적 범죄를 국가 정책으로 채택.<br>
@@ -333,6 +326,7 @@
                             <span class="lang-ko">제3조 (글로벌 시민 국가의 정의)</span>
                             <span class="lang-en">Article 3 (Definition of Global Citizen State)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">① 북한과도임시정부가 지향하는 국가는 혈통주의와 배타적 민족주의를 거부하고, 자유, 민주주의, 인권의 가치를 공유하는 전 세계 모든 이들에게 열려 있는 '글로벌 시민 국가'이다.<br>
                             ② 국가는 인종, 피부색, 출신 국가에 관계없이 본 헌법의 가치에 동의하고 국가 건설에 기여하고자 하는 세계 시민을 포용한다.</span>
@@ -345,6 +339,7 @@
                             <span class="lang-ko">제4조 (외국인의 시민권 및 공직 진출)</span>
                             <span class="lang-en">Article 4 (Citizenship and Public Office for Foreigners)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">① 북한과도임시정부 헌법에 동의하고, 독재 정권의 붕괴, 외교적 고립 탈피, 경제 재건 등에 지대한 공헌을 한 외국인은 그 출신, 민족, 국적에 상관없이 본인의 의사에 따라 시민이 될 수 있다.<br>
                             ② 제1항에 따라 시민이 된 자는 장관, 차관, 국회의원, 대법관 등 정부의 주요 공직에 선출되거나 임명될 수 있는 피선거권과 공무 담임권을 내국인과 동등하게 보장받는다.</span>
@@ -357,6 +352,7 @@
                             <span class="lang-ko">제5조 (임시정부의 주체적 역할)</span>
                             <span class="lang-en">Article 5 (Subjective Role of the Provisional Government)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">북한과도임시정부는 단순히 미래를 준비하는 과도기적 관리자가 아니라, 전 인민적인 봉기를 조직하고 지원하며, 독재 정권의 폭력에 맞서 싸우는 능동적인 주체로서의 의무와 책임을 다한다.</span>
                             <span class="lang-en">The Provisional Government fulfills its duties and responsibilities as an active subject that organizes and supports pan-national uprisings and fights against the violence of the dictatorship, rather than merely being a transitional manager preparing for the future.</span>
@@ -371,6 +367,7 @@
                             <span class="lang-ko">제6조 (인간의 존엄과 가치)</span>
                             <span class="lang-en">Article 6 (Human Dignity and Value)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를 가진다.</span>
                             <span class="lang-en">All citizens have dignity and value as human beings and have the right to pursue happiness.</span>
@@ -381,6 +378,7 @@
                             <span class="lang-ko">제7조 (평등권)</span>
                             <span class="lang-en">Article 7 (Right to Equality)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">모든 국민은 법 앞에 평등하다. 성별, 종교, 인종, 사회적 신분 또는 과거의 출신 성분(성분 제도)에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에서 차별을 받지 아니한다.</span>
                             <span class="lang-en">All citizens are equal before the law. Discrimination based on gender, religion, race, social status, or songbun (class origin) is strictly prohibited.</span>
@@ -395,6 +393,7 @@
                             <span class="lang-ko">제17조 (공직 취임 제한)</span>
                             <span class="lang-en">Article 17 (Restriction on Holding Public Office)</span>
                         </span>
+                        
                         <div class="article-content font-bold text-red-700 bg-red-50 p-6 rounded-xl border border-red-200 text-justify">
                             <span class="lang-ko">북한 독재 정권의 고위직(노동당 중앙위, 보위부, 군 장성 등)을 역임했거나, 대량 학살, 고문, 강제 수용소 운영 등 반인륜적 범죄에 가담한 자는 향후 50년 동안 어떠한 선출직 및 임명직 공직에도 취임할 수 없다. 이는 사면이나 감형의 대상이 되지 않는다.</span>
                             <span class="lang-en">Those who held high-ranking positions in the North Korean dictatorship (Workers' Party Central Committee, State Security Department, Generals, etc.) or participated in crimes against humanity such as massacres, torture, or operation of concentration camps are prohibited from holding any elected or appointed public office for the next 50 years. This shall not be subject to amnesty or commutation.</span>
@@ -409,6 +408,7 @@
                             <span class="lang-ko">제21조 (전면적 대외 개방과 시장 경제)</span>
                             <span class="lang-en">Article 21 (Total External Opening)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">국가는 자유로운 시장 경제 체제를 전면적으로 도입하며, 전 세계 자본과 기술에 대하여 전면적인 개방 정책을 시행한다. 사유 재산권은 국가가 침해할 수 없는 신성한 권리로 보장되며, 모든 경제 활동의 자유를 법적으로 담보한다.</span>
                             <span class="lang-en">The State completely opens all industrial sectors, including economy, finance, infrastructure construction, mineral resource mining, and energy, to the world. Barriers to entry for foreign capital shall be abolished, and free investment shall be guaranteed.</span>
@@ -419,6 +419,7 @@
                             <span class="lang-ko">제23조 (법정 통화)</span>
                             <span class="lang-en">Article 23 (Legal Tender)</span>
                         </span>
+                        
                         <div class="article-content">
                             <span class="lang-ko">① 기존 북한 원화는 가치 저장 및 교환 수단으로서의 기능을 상실했으므로 전면 폐기한다.<br>
                             ② 초인플레이션과 외환 위기를 방지하고 국제 금융 시스템으로의 즉각적인 편입을 위하여, 미국 달러(USD) 또는 그에 연동된 안정적인 디지털 화폐(USDC)를 국가의 공식 법정 통화로 채택한다.</span>
@@ -457,7 +458,6 @@
         </div>
     </section>
 
-    <!-- 2. 내각구조 및 인사영입 -->
     <section id="organization" class="py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-16 text-center">
@@ -598,7 +598,6 @@
         </div>
     </section>
 
-    <!-- 3. 당면 과제와 로드맵 -->
     <section id="roadmap" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
@@ -612,7 +611,6 @@
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-8 text-sm leading-relaxed">
-                <!-- 1단계 -->
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-8 hover:border-sky-500 transition duration-300">
                     <div class="text-4xl font-black text-slate-200 mb-4">01</div>
                     <h3 class="text-xl font-bold mb-4 text-sky-700">
@@ -638,7 +636,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- 2단계 -->
                 <div class="bg-white border-2 border-sky-600 rounded-xl p-8 shadow-xl transition transform hover:scale-105">
                     <div class="text-4xl font-black text-sky-100 mb-4">02</div>
                     <h3 class="text-xl font-bold mb-4 text-sky-700">
@@ -672,7 +669,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- 3단계 -->
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-8">
                     <div class="text-4xl font-black text-slate-200 mb-4">03</div>
                     <h3 class="text-xl font-bold mb-4 text-sky-700">
@@ -714,7 +710,6 @@
         </div>
     </section>
 
-    <!-- 4. 역사적 파트너십 제안 -->
     <section id="message" class="py-24 bg-slate-900 text-white">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <h2 class="text-3xl md:text-5xl font-bold mb-8 serif">
@@ -735,7 +730,6 @@
         </div>
     </section>
 
-    <!-- 5. 미래의 새 국가 -->
     <section id="vision" class="py-24 bg-white text-slate-800">
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-2 gap-16 items-center">
@@ -757,7 +751,6 @@
         </div>
     </section>
 
-    <!-- 6. 자주 묻는 질문 (Q&A) -->
     <section id="qna" class="py-24 bg-slate-50">
         <div class="max-w-4xl mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-slate-900 mb-12 serif">
@@ -765,13 +758,13 @@
                 <span class="lang-en">Q&A</span>
             </h2>
             <div class="space-y-4">
-                <!-- Q1 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q1')">
                         <span class="text-lg text-slate-800">
                             <span class="lang-ko">Q1. 중국과 러시아가 자국의 이익을 지키기 위해 군사적·외교적으로 개입하지 않을까요?</span>
                             <span class="lang-en">Q1. Won't China and Russia intervene militarily or diplomatically to protect their interests?</span>
                         </span>
+                        
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q1"></i>
                     </button>
                     <div id="q1" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
@@ -810,13 +803,13 @@
                     </div>
                 </div>
 
-                <!-- Q2 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q2')">
                         <span class="text-lg text-slate-800">
                             <span class="lang-ko">Q2. 미국과 서방 국가들이 PGNK를 지지해야 할 실질적인 이유와 보상은 무엇입니까?</span>
                             <span class="lang-en">Q2. What are the practical reasons and rewards for the US and Western countries to support the PGNK?</span>
                         </span>
+                        
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q2"></i>
                     </button>
                     <div id="q2" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
@@ -853,13 +846,13 @@
                     </div>
                 </div>
 
-                <!-- Q3 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q3')">
                         <span class="text-lg text-slate-800">
                             <span class="lang-ko">Q3. 대한민국 정부의 주권 및 헌법적 가치와 충돌하거나 경쟁 관계가 되지는 않습니까?</span>
                             <span class="lang-en">Q3. Will it conflict or compete with the sovereignty and constitutional values of the Republic of Korea government?</span>
                         </span>
+                        
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q3"></i>
                     </button>
                     <div id="q3" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
@@ -914,13 +907,13 @@
                     </div>
                 </div>
 
-                <!-- Q4 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q4')">
                         <span class="text-lg text-slate-800">
                             <span class="lang-ko">Q4. 당신들은 누구입니까? 이 거대한 변화를 주도할 역량이 있습니까?</span>
                             <span class="lang-en">Q4. Who are you? Do you have the capacity to lead this massive change?</span>
                         </span>
+                        
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q4"></i>
                     </button>
                     <div id="q4" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
@@ -945,13 +938,13 @@
                     </div>
                 </div>
 
-                <!-- Q5 -->
                 <div class="bg-white rounded-lg border border-slate-200">
                     <button class="w-full px-6 py-4 text-left font-bold flex justify-between items-center" onclick="toggleAccordion('q5')">
                         <span class="text-lg text-slate-800">
                             <span class="lang-ko">Q5. PGNK 모델이 실제로 성공하여 국가를 건설할 수 있다는 근거는 무엇입니까?</span>
                             <span class="lang-en">Q5. What is the basis for the PGNK model actually succeeding in building a nation?</span>
                         </span>
+                        
                         <i data-lucide="chevron-down" class="w-5 h-5" id="icon-q5"></i>
                     </button>
                     <div id="q5" class="hidden px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4 leading-relaxed text-justify">
@@ -988,82 +981,6 @@
             <p>&copy; 2026 Preparatory Committee for the PGNK. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Contact Modal -->
-    <div id="contactModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity modal-overlay" aria-hidden="true" onclick="closeModal()"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full modal-content">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-slate-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <i data-lucide="mail" class="h-6 w-6 text-slate-600"></i>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                <span class="lang-ko">연락 및 참여하기</span>
-                                <span class="lang-en">Contact & Join Us</span>
-                            </h3>
-                            <div class="mt-4">
-                                <!-- Formspree Form Action -->
-                                <!-- IMPORTANT: Replace 'https://formspree.io/f/YOUR_FORM_ID' with your actual Formspree endpoint -->
-                                <form action="https://formspree.io/f/mrgvnzll" method="POST" class="space-y-4">
-                                    <input type="hidden" name="_subject" value="New Contact from PGNK Website">
-                                    <input type="hidden" name="_cc" value="admin@pgnk.org">
-                                    <div>
-                                        <label for="contact-name" class="block text-sm font-medium text-gray-700">
-                                            <span class="lang-ko">이름 / 단체명</span>
-                                            <span class="lang-en">Name / Organization</span>
-                                        </label>
-                                        <input type="text" name="name" id="contact-name" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
-                                    </div>
-                                    <div>
-                                        <label for="contact-phone" class="block text-sm font-medium text-gray-700">
-                                            <span class="lang-ko">연락처</span>
-                                            <span class="lang-en">Phone Number</span>
-                                        </label>
-                                        <input type="tel" name="phone" id="contact-phone" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
-                                    </div>
-                                    <div>
-                                        <label for="contact-email" class="block text-sm font-medium text-gray-700">
-                                            <span class="lang-ko">이메일</span>
-                                            <span class="lang-en">Email</span>
-                                        </label>
-                                        <input type="email" name="email" id="contact-email" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
-                                    </div>
-                                    <div>
-                                        <label for="contact-address" class="block text-sm font-medium text-gray-700">
-                                            <span class="lang-ko">주소</span>
-                                            <span class="lang-en">Address</span>
-                                        </label>
-                                        <input type="text" name="address" id="contact-address" class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
-                                    </div>
-                                    <div>
-                                        <label for="contact-message" class="block text-sm font-medium text-gray-700">
-                                            <span class="lang-ko">메시지</span>
-                                            <span class="lang-en">Message</span>
-                                        </label>
-                                        <textarea id="contact-message" name="message" rows="3" required class="mt-1 focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"></textarea>
-                                    </div>
-                                    <div class="bg-gray-50 pt-3 sm:flex sm:flex-row-reverse">
-                                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-900 text-base font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                            <span class="lang-ko">보내기</span>
-                                            <span class="lang-en">Send</span>
-                                        </button>
-                                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                                            <span class="lang-ko">취소</span>
-                                            <span class="lang-en">Cancel</span>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         let currentLang = 'ko';
